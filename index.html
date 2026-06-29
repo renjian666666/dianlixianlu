@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>电力线路 · 自测 + 原理图解</title>
+    <title>电力安规 · 自测 + 原理图解</title>
     <style>
         /* ===== 基础重置 & 全局 ===== */
         * {
@@ -718,7 +718,7 @@
 
         <!-- ===== 头部 ===== -->
         <div class="header">
-            <h1>⚡ 电力线路 · 综合学习</h1>
+            <h1>⚡ 电力安规 · 综合学习</h1>
             <div class="brand">✧ 由 <span>沐春风</span> 制作</div>
         </div>
 
@@ -961,6 +961,7 @@
         // ============================================================
 
         // ---------- 数据 ----------
+        // 修正第8题答案为 "遥测" （原为 "遥信"）
         const fillData = [
             { id: 1, question: '电力线路检修带电导线电压在 10-35kV 时，距离检修的线路的安全距离为 ___ m。', answers: ['1.0', '1'],
                 explanation: '安规 10～35kV 不停电检修安全距离 1m。' },
@@ -976,8 +977,9 @@
                 explanation: '避雷器用于防护雷电过电压（雷击）。' },
             { id: 7, question: '电流表又称 ___ ，电流表是用来测量电流的大小，单位为安培 (A)。', answers: ['安培表'],
                 explanation: '电流表又称安培表。' },
-            { id: 8, question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括：遥测、遥控、 ___ 。', answers: ['遥信'],
-                explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。' },
+            // 第8题修正为 "遥测"
+            { id: 8, question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括： ___、遥控、遥信 。', answers: ['遥测'],
+                explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。注意：本题空缺的是“遥测”。' },
             { id: 9, question: '容易发生火花、温度过高的电气设备，必须装在地面 ___ m 以上的位置。', answers: ['2.5', '2.5m'],
                 explanation: '电气设备安装高度要求 ≥ 2.5m。' },
             { id: 10, question: '每台油量为 ___ kg 及以上的三相变压器，应装设在单独的变压器室内。', answers: ['1000', '1000kg'],
@@ -1518,7 +1520,7 @@
         // 初始化练习
         render();
 
-        console.log('⚡ 综合学习系统 · 由沐春风制作 (填空题匹配已修复)');
+        console.log('⚡ 综合学习系统 · 由沐春风制作 (第8题已修正为“遥测”)');
     </script>
 </body>
 </html>
