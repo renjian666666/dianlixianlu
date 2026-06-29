@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>电力线路 · 自测 + 原理图解</title>
+    <title>电力安规 · 自测 + 原理图解</title>
     <style>
         /* ===== 基础重置 & 全局 ===== */
         * {
@@ -718,7 +718,7 @@
 
         <!-- ===== 头部 ===== -->
         <div class="header">
-            <h1>⚡ 电力线路 · 综合学习</h1>
+            <h1>⚡ 电力安规 · 综合学习</h1>
             <div class="brand">✧ 由 <span>沐春风</span> 制作</div>
         </div>
 
@@ -929,7 +929,6 @@
                 Object.keys(pages).forEach(key => {
                     pages[key].classList.toggle('show', key === tab);
                 });
-                // 如果切换到 study，确保第一个子标签激活
                 if (tab === 'study') {
                     const activeSub = document.querySelector('#subTabs .sub-btn.active');
                     if (!activeSub) {
@@ -958,7 +957,7 @@
         });
 
         // ============================================================
-        //  2. 在线练习模块 (完整保留原测验逻辑)
+        //  2. 在线练习模块 (完整保留原测验逻辑，修复填空题匹配)
         // ============================================================
 
         // ---------- 数据 ----------
@@ -1120,29 +1119,26 @@
             }
         }
 
+        // ---------- 修复后的填空题匹配逻辑 ----------
         function calculateCorrectness(q) {
             const data = q.data;
             if (q.type === 'fill') {
                 const userAns = (q.userAnswer || '').trim();
                 if (!userAns) return false;
+
+                // 1. 精确匹配（去除空格、统一小写）
                 const normalizedUser = userAns.replace(/\s/g, '').toLowerCase();
                 for (let ans of data.answers) {
                     const normAns = ans.replace(/\s/g, '').toLowerCase();
-                    if (normalizedUser === normAns || normalizedUser.includes(normAns) || normAns.includes(
-                            normalizedUser)) return true;
+                    if (normalizedUser === normAns) return true;
                 }
+
+                // 2. 数字匹配（将用户输入和答案解析为数字，忽略单位）
                 const numUser = parseFloat(userAns);
                 if (!isNaN(numUser)) {
                     for (let ans of data.answers) {
                         const numAns = parseFloat(ans);
-                        if (!isNaN(numAns) && Math.abs(numUser - numAns) < 0.01) return true;
-                    }
-                }
-                for (let ans of data.answers) {
-                    const match = ans.match(/[（(]([^）)]+)[）)]/);
-                    if (match) {
-                        const inner = match[1];
-                        if (userAns.includes(inner) || inner.includes(userAns)) return true;
+                        if (!isNaN(numAns) && Math.abs(numUser - numAns) < 0.001) return true;
                     }
                 }
                 return false;
@@ -1522,7 +1518,7 @@
         // 初始化练习
         render();
 
-        console.log('⚡ 综合学习系统 · 由沐春风制作');
+        console.log('⚡ 综合学习系统 · 由沐春风制作 (填空题匹配已修复)');
     </script>
 </body>
 </html>
