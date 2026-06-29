@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>电力安规 · 逐题练习</title>
+    <title>电力线路 · 自测 + 原理图解</title>
     <style>
+        /* ===== 基础重置 & 全局 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +22,7 @@
             align-items: flex-start;
         }
         .app {
-            max-width: 920px;
+            max-width: 960px;
             width: 100%;
             background: #ffffff;
             border-radius: 28px;
@@ -31,16 +32,11 @@
             transition: all 0.2s;
         }
         @media (max-width: 640px) {
-            body {
-                padding: 10px;
-            }
-            .app {
-                padding: 16px 14px 32px;
-                border-radius: 20px;
-            }
+            body { padding: 10px; }
+            .app { padding: 16px 14px 32px; border-radius: 20px; }
         }
 
-        /* header */
+        /* ===== 头部 ===== */
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -70,19 +66,58 @@
             white-space: nowrap;
             border: 1px solid #e2e8f0;
         }
-        .header .brand span {
-            color: #2563eb;
-            font-weight: 600;
-        }
+        .header .brand span { color: #2563eb; font-weight: 600; }
         @media (max-width: 500px) {
-            .header h1 {
-                font-size: 19px;
-            }
-            .header .brand {
-                font-size: 13px;
-                padding: 4px 14px;
-            }
+            .header h1 { font-size: 19px; }
+            .header .brand { font-size: 13px; padding: 4px 14px; }
         }
+
+        /* ===== 一级导航 Tabs ===== */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin: 6px 0 18px 0;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #eef2f6;
+            padding-bottom: 8px;
+        }
+        .nav-tabs .tab-btn {
+            padding: 10px 26px;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+            border: 2px solid transparent;
+        }
+        .nav-tabs .tab-btn:hover { background: #f1f4f9; color: #1e293b; }
+        .nav-tabs .tab-btn.active {
+            color: #2563eb;
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+        @media (max-width: 480px) {
+            .nav-tabs .tab-btn { font-size: 14px; padding: 8px 18px; }
+        }
+
+        /* ===== 页面容器 ===== */
+        .page-wrap {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .page-wrap.show { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0.4; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+              模块1: 在线练习 (原测验)
+            ============================================================ */
 
         /* stats */
         .stats {
@@ -107,18 +142,10 @@
             font-size: 16px;
             min-width: 20px;
         }
-        .stats .stat-item .label {
-            color: #475569;
-        }
-        .stats .stat-item.done .num {
-            color: #16a34a;
-        }
-        .stats .stat-item.wrong .num {
-            color: #dc2626;
-        }
-        .stats .stat-item.pending .num {
-            color: #f59e0b;
-        }
+        .stats .stat-item .label { color: #475569; }
+        .stats .stat-item.done .num { color: #16a34a; }
+        .stats .stat-item.wrong .num { color: #dc2626; }
+        .stats .stat-item.pending .num { color: #f59e0b; }
 
         /* section title */
         .section-title {
@@ -139,26 +166,14 @@
             padding: 2px 14px;
             border-radius: 30px;
         }
-        .section-title .badge.fill {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
-        .section-title .badge.choice {
-            background: #d1fae5;
-            color: #059669;
-        }
-        .section-title .badge.judge {
-            background: #fef3c7;
-            color: #d97706;
-        }
+        .section-title .badge.fill { background: #dbeafe; color: #1d4ed8; }
+        .section-title .badge.choice { background: #d1fae5; color: #059669; }
+        .section-title .badge.judge { background: #fef3c7; color: #d97706; }
         @media (max-width: 480px) {
-            .section-title {
-                font-size: 17px;
-                margin-top: 22px;
-            }
+            .section-title { font-size: 17px; margin-top: 22px; }
         }
 
-        /* question card */
+        /* q-card */
         .q-card {
             background: #ffffff;
             border: 1px solid #eef2f6;
@@ -168,9 +183,7 @@
             transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
             position: relative;
         }
-        .q-card:hover {
-            border-color: #d0d8e3;
-        }
+        .q-card:hover { border-color: #d0d8e3; }
         .q-card .q-header {
             display: flex;
             align-items: baseline;
@@ -234,11 +247,7 @@
             cursor: not-allowed;
         }
         @media (max-width: 480px) {
-            .q-card .q-text .fill-input {
-                width: 110px;
-                font-size: 14px;
-                height: 38px;
-            }
+            .q-card .q-text .fill-input { width: 110px; font-size: 14px; height: 38px; }
         }
 
         /* options */
@@ -357,9 +366,7 @@
             color: #334155;
             display: none;
         }
-        .explanation.show {
-            display: block;
-        }
+        .explanation.show { display: block; }
         .explanation .exp-label {
             font-weight: 600;
             color: #475569;
@@ -369,14 +376,10 @@
             font-weight: 600;
             color: #1d4ed8;
         }
-        .explanation .exp-answer.correct-ans {
-            color: #16a34a;
-        }
-        .explanation .exp-answer.wrong-ans {
-            color: #dc2626;
-        }
+        .explanation .exp-answer.correct-ans { color: #16a34a; }
+        .explanation .exp-answer.wrong-ans { color: #dc2626; }
 
-        /* single submit button */
+        /* single-actions */
         .single-actions {
             margin-top: 14px;
             display: flex;
@@ -406,9 +409,7 @@
             background: #1d4ed8;
             box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
         }
-        .btn-confirm-single:active {
-            transform: scale(0.96);
-        }
+        .btn-confirm-single:active { transform: scale(0.96); }
         .btn-confirm-single:disabled {
             background: #94a3b8;
             border-color: #94a3b8;
@@ -416,9 +417,7 @@
             cursor: not-allowed;
             opacity: 0.7;
         }
-        .btn-confirm-single .icon {
-            margin-right: 6px;
-        }
+        .btn-confirm-single .icon { margin-right: 6px; }
 
         .status-badge {
             font-size: 14px;
@@ -431,16 +430,9 @@
             align-items: center;
             gap: 4px;
         }
-        .status-badge.correct {
-            background: #dcfce7;
-            color: #15803d;
-        }
-        .status-badge.wrong {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
+        .status-badge.correct { background: #dcfce7; color: #15803d; }
+        .status-badge.wrong { background: #fee2e2; color: #b91c1c; }
 
-        /* missing highlight */
         .q-card.missing {
             border-color: #f59e0b;
             background: #fffbeb;
@@ -501,9 +493,7 @@
             background: #1d4ed8;
             box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
         }
-        .btn-submit:active {
-            transform: scale(0.97);
-        }
+        .btn-submit:active { transform: scale(0.97); }
         .btn-submit:disabled {
             background: #94a3b8;
             border-color: #94a3b8;
@@ -522,30 +512,153 @@
             transition: background 0.2s;
             min-height: 44px;
         }
-        .btn-reset:hover {
-            background: #e5e9ef;
-        }
+        .btn-reset:hover { background: #e5e9ef; }
         @media (max-width: 600px) {
             .submit-area {
                 flex-direction: column;
                 align-items: stretch;
             }
-            .submit-area .left {
-                justify-content: center;
-            }
-            .btn-submit {
-                width: 100%;
-                text-align: center;
-                padding: 14px;
-            }
-            .btn-reset {
-                width: 100%;
-                text-align: center;
-                padding: 12px;
-            }
+            .submit-area .left { justify-content: center; }
+            .btn-submit { width: 100%; text-align: center; padding: 14px; }
+            .btn-reset { width: 100%; text-align: center; padding: 12px; }
         }
 
-        /* toast */
+        /* ============================================================
+              模块2: 原理图解 (变压器 + 避雷器)
+            ============================================================ */
+
+        .study-wrap {
+            padding: 4px 0;
+        }
+        .study-wrap .sub-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #eef2f6;
+            padding-bottom: 8px;
+        }
+        .study-wrap .sub-tabs .sub-btn {
+            padding: 8px 22px;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .study-wrap .sub-tabs .sub-btn:hover {
+            background: #f1f4f9;
+            color: #1e293b;
+        }
+        .study-wrap .sub-tabs .sub-btn.active {
+            color: #2563eb;
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .study-wrap .sub-page {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .study-wrap .sub-page.show { display: block; }
+
+        /* 学习卡片样式 */
+        .learn-card {
+            background: #ffffff;
+            border: 1px solid #eef2f6;
+            border-radius: 16px;
+            padding: 20px 24px 24px;
+            margin-bottom: 18px;
+            transition: border-color 0.2s;
+        }
+        .learn-card:hover { border-color: #d0d8e3; }
+        .learn-card .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f2b44;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .learn-card .card-title .step {
+            background: #2563eb;
+            color: #fff;
+            font-size: 13px;
+            border-radius: 30px;
+            padding: 0 12px;
+            line-height: 26px;
+        }
+        .learn-card p,
+        .learn-card li {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e293b;
+        }
+        .learn-card ul {
+            padding-left: 22px;
+            margin: 6px 0;
+        }
+        .learn-card ul li { margin-bottom: 4px; }
+
+        .img-box {
+            margin: 16px 0 20px 0;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #eef2f6;
+            text-align: center;
+        }
+        .img-box img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .img-box .img-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+        .img-box .img-fallback {
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 30px 10px;
+        }
+        .img-box .img-fallback .icon {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background: #f0f7ff;
+            border-left: 4px solid #2563eb;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin: 10px 0 4px 0;
+        }
+        .highlight-box strong { color: #1d4ed8; }
+
+        .split-line {
+            margin: 28px 0;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .two-col-learn {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 700px) {
+            .two-col-learn { grid-template-columns: 1fr; }
+        }
+
+        /* ===== Toast ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -569,15 +682,9 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-        .toast .highlight {
-            color: #fbbf24;
-        }
+        .toast .highlight { color: #fbbf24; }
         @media (max-width: 480px) {
-            .toast {
-                font-size: 13px;
-                padding: 12px 20px;
-                bottom: 20px;
-            }
+            .toast { font-size: 13px; padding: 12px 20px; bottom: 20px; }
         }
 
         .footer {
@@ -589,377 +696,394 @@
             padding-top: 20px;
             letter-spacing: 0.3px;
         }
-        .footer strong {
-            color: #475569;
-            font-weight: 600;
-        }
+        .footer strong { color: #475569; font-weight: 600; }
 
         /* print */
         @media print {
             .btn-submit,
             .btn-reset,
             .btn-confirm-single,
-            .toast {
-                display: none !important;
-            }
-            .q-card {
-                break-inside: avoid;
-                border-color: #ccc;
-            }
-            .app {
-                box-shadow: none;
-                border: 1px solid #ddd;
-            }
+            .toast,
+            .nav-tabs,
+            .sub-tabs { display: none !important; }
+            .q-card { break-inside: avoid; border-color: #ccc; }
+            .app { box-shadow: none; border: 1px solid #ddd; }
+            .page-wrap { display: block !important; }
+            .study-wrap .sub-page { display: block !important; }
         }
     </style>
 </head>
 <body>
     <div class="app" id="app">
-        <!-- header -->
+
+        <!-- ===== 头部 ===== -->
         <div class="header">
-            <h1>⚡ 电力安规 · 逐题练</h1>
+            <h1>⚡ 电力线路 · 综合学习</h1>
             <div class="brand">✧ 由 <span>沐春风</span> 制作</div>
         </div>
 
-        <!-- stats -->
-        <div class="stats" id="stats">
-            <div class="stat-item"><span class="label">📝 总题</span><span class="num" id="totalCount">0</span></div>
-            <div class="stat-item done"><span class="label">✅ 已答</span><span class="num" id="doneCount">0</span></div>
-            <div class="stat-item wrong"><span class="label">❌ 错误</span><span class="num" id="wrongCount">0</span></div>
-            <div class="stat-item pending"><span class="label">⏳ 未答</span><span class="num" id="pendingCount">0</span></div>
+        <!-- ===== 一级导航 ===== -->
+        <div class="nav-tabs" id="mainTabs">
+            <button class="tab-btn active" data-tab="practice">📝 在线练习</button>
+            <button class="tab-btn" data-tab="study">📖 原理图解</button>
         </div>
 
-        <!-- 题目容器 -->
-        <div id="questionsContainer"></div>
-
-        <!-- submit -->
-        <div class="submit-area">
-            <div class="left">
-                <div class="score">得分：<span class="num" id="scoreNum">0</span> <span class="total">/ <span id="totalScore">0</span></span></div>
-                <button class="btn-reset" id="resetBtn">🔄 重新答题</button>
+        <!-- ============================================================
+        页面1: 在线练习
+        ============================================================ -->
+        <div class="page-wrap show" id="pagePractice">
+            <!-- stats -->
+            <div class="stats" id="stats">
+                <div class="stat-item"><span class="label">📝 总题</span><span class="num" id="totalCount">0</span></div>
+                <div class="stat-item done"><span class="label">✅ 已答</span><span class="num" id="doneCount">0</span></div>
+                <div class="stat-item wrong"><span class="label">❌ 错误</span><span class="num" id="wrongCount">0</span></div>
+                <div class="stat-item pending"><span class="label">⏳ 未答</span><span class="num" id="pendingCount">0</span></div>
             </div>
-            <button class="btn-submit" id="submitBtn">📨 提交全部未答题</button>
+
+            <!-- 题目容器 -->
+            <div id="questionsContainer"></div>
+
+            <!-- submit area -->
+            <div class="submit-area">
+                <div class="left">
+                    <div class="score">得分：<span class="num" id="scoreNum">0</span> <span class="total">/ <span id="totalScore">0</span></span></div>
+                    <button class="btn-reset" id="resetBtn">🔄 重新答题</button>
+                </div>
+                <button class="btn-submit" id="submitBtn">📨 提交全部未答题</button>
+            </div>
         </div>
 
+        <!-- ============================================================
+        页面2: 原理图解
+        ============================================================ -->
+        <div class="page-wrap" id="pageStudy">
+            <div class="study-wrap">
+                <!-- 二级导航 -->
+                <div class="sub-tabs" id="subTabs">
+                    <button class="sub-btn active" data-sub="transformer">🔁 变压器接线分析</button>
+                    <button class="sub-btn" data-sub="arrester">⚡ 避雷器工作原理</button>
+                </div>
+
+                <!-- 子页面: 变压器 -->
+                <div class="sub-page show" id="subTransformer">
+                    <div class="learn-card">
+                        <div class="card-title">
+                            <span>📌 问题</span>
+                        </div>
+                        <p style="font-weight:500;font-size:16px;">根据变压器一二次接线图画向量图，并分析是什么接线？</p>
+
+                        <div class="img-box">
+                            <h4 style="margin-bottom:6px;color:#1e293b;">基础接线端子图：</h4>
+                            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEWUAVqQi6E6ZkSNVfdV0MqmzhfNDfmdQACjyEAAv6GGFYfrOJcR9KJQjwE.jpg"
+                            alt="变压器端子图" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                            <div class="img-fallback" style="display:none;">
+                                <span class="icon">🖼️</span>
+                                图片加载失败，请检查链接或网络<br>
+                                <span style="font-size:12px;color:#94a3b8;">https://img.remit.ee/api/file/...jpg</span>
+                            </div>
+                            <div class="img-label">变压器一二次接线端子图</div>
+                        </div>
+
+                        <div class="img-box">
+                            <h4 style="margin-bottom:6px;color:#1e293b;">解析向量图：</h4>
+                            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEWUApqQi6vx8cW7UAvAZo41ZKoquqgGAAClSEAAv6GGFYBSaRGkCruyDwE.jpg"
+                            alt="变压器向量解答图" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                            <div class="img-fallback" style="display:none;">
+                                <span class="icon">📐</span>
+                                图片加载失败，请检查链接或网络<br>
+                                <span style="font-size:12px;color:#94a3b8;">https://img.remit.ee/api/file/...jpg</span>
+                            </div>
+                            <div class="img-label">变压器向量图分析（解答）</div>
+                        </div>
+
+                        <div class="split-line"></div>
+
+                        <h3 style="margin:20px 0 10px;color:#1e293b;">一、绕组端子标识</h3>
+                        <p>高压绕组端子：U1、U2，V1、V2，W1、W2；绕组组合U2V2W2</p>
+
+                        <h3 style="margin:20px 0 10px;color:#1e293b;">二、接线图绘制步骤</h3>
+                        <h4 style="margin:14px 0 6px;color:#334155;">步骤1：绘制高压侧向量（以高压侧线电压为12点钟相位参考）</h4>
+                        <ul>
+                            <li>高压一次侧：三角形D接线</li>
+                            <li>接线规则：U2接V1、V2接W1、W2接U1</li>
+                            <li>电气特性：三角形绕组线电压=相电压，例：U<sub>UV</sub>=U<sub>U1U2</sub></li>
+                            <li>高压三相相电压互差120°，E<sub>UV</sub> 固定置于12点钟方位作为基准。</li>
+                        </ul>
+
+                        <h4 style="margin:14px 0 6px;color:#334155;">步骤2：绘制低压侧向量</h4>
+                        <ul>
+                            <li>低压二次侧：星形yn接线</li>
+                            <li>接线规则：u2、v2、w2尾端连接，引出中性点N</li>
+                            <li>电气特性：星形绕组线电压=√3倍相电压，线电压相位滞后对应相电压30°；低压相电压E<sub>un</sub>置于12点钟方位。</li>
+                        </ul>
+
+                        <h4 style="margin:14px 0 6px;color:#334155;">步骤3：向量对比判断接线组别</h4>
+                        <ul>
+                            <li>相位关系：低压侧线电压超前高压侧线电压30°</li>
+                            <li>时钟判定：以高压线电压12点为基准，低压线电压落在11点钟方位</li>
+                            <li>最终接线组别：<strong>Dyn11</strong></li>
+                        </ul>
+                        <p style="margin-top:6px;">释义：高压三角形D、低压星形yn、11点接线，低压相位超前高压30°。</p>
+
+                        <h3 style="margin:20px 0 10px;color:#1e293b;">三、向量相位补充说明</h3>
+                        <ul>
+                            <li>相位时钟判定规则：高压线电压固定12点，观察低压同名线电压钟点位置；</li>
+                            <li>Dyn11特点：低压超前高压30°，对应时钟11点，常用于配电变压器；</li>
+                            <li>向量定义：绕组电动势Ė<sub>绕组</sub>为绕组首端至尾端电势，线端电势Ė<sub>终端</sub>为对外出线电势。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 子页面: 避雷器 -->
+                <div class="sub-page" id="subArrester">
+                    <div class="learn-card">
+                        <div class="card-title">
+                            <span>📌 分析避雷器的工作原理</span>
+                        </div>
+
+                        <div class="img-box">
+                            <h4 style="margin-bottom:6px;color:#1e293b;">避雷器结构示意图：</h4>
+                            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEWUA5qQi67w118IXEjPRod6UwYdKlItwACmSEAAv6GGFYdMdhibnrJpTwE.png"
+                            alt="避雷器原理图" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                            <div class="img-fallback" style="display:none;">
+                                <span class="icon">🔗</span>
+                                图片加载失败，请检查链接或网络<br>
+                                <span style="font-size:12px;color:#94a3b8;">https://img.remit.ee/api/file/...png</span>
+                            </div>
+                            <div class="img-label">氧化锌避雷器原理示意</div>
+                        </div>
+
+                        <div class="split-line"></div>
+
+                        <h3 style="margin:20px 0 10px;color:#1e293b;">一、结构基础</h3>
+                        <p>现代避雷器核心是 <strong>氧化锌（ZnO）非线性电阻阀片</strong>，整体并联在电力线路与大地之间。
+                        核心特性：<strong>电阻随电压剧烈变化</strong> —— 低压时呈高阻绝缘态，高压时迅速导通。</p>
+
+                        <h3 style="margin:20px 0 10px;color:#1e293b;">二、分两种工况说明</h3>
+
+                        <h4 style="margin:14px 0 6px;color:#334155;">1. 系统正常运行（工频额定电压）</h4>
+                        <p>电网只有正常工作电压，电压幅值低。氧化锌阀片呈现极大绝缘电阻，近似开路，几乎没有电流流过避雷器，不影响线路正常送电，不会造成对地漏电、损耗。</p>
+
+                        <h4 style="margin:14px 0 6px;color:#334155;">2. 雷电 / 操作过电压来袭（出现高压冲击）</h4>
+                        <p>雷击、分合闸会产生数倍于额定电压的瞬时过电压，冲击沿导线传播：</p>
+                        <ul>
+                            <li>高电压加在避雷器两端，阀片电阻瞬间急剧变小，由绝缘变为导通；</li>
+                            <li>避雷器打开一条对地泄放通道，巨大雷电流通过避雷器流入接地装置散入大地；</li>
+                            <li>导通时避雷器自身会维持一个很低的固定电压（残压），把线路冲击电压钳制在设备绝缘能承受的安全范围；</li>
+                            <li>并联在同一线路的变压器、开关柜等设备，两端电压被限制在残压，绝缘不会被击穿。</li>
+                        </ul>
+
+                        <h4 style="margin:14px 0 6px;color:#334155;">3. 过电压消失后（恢复绝缘）</h4>
+                        <p>雷电冲击瞬时结束，线路回到工频低压，阀片电阻立刻恢复高阻绝缘状态，自动切断工频电流，避免持续对地短路跳闸，电网恢复正常运行。</p>
+
+                        <h3 style="margin:20px 0 10px;color:#1e293b;">三、结合图示完整流程</h3>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px 4px;font-size:15px;line-height:1.9;background:#f8fafc;padding:12px 16px;border-radius:10px;">
+                            <span style="background:#eff6ff;padding:6px 18px;border-radius:30px;">① 雷电过电压冲击波沿线路袭来</span>
+                            <span style="color:#94a3b8;">→</span>
+                            <span style="background:#eff6ff;padding:6px 18px;border-radius:30px;">② 避雷器优先导通，雷电流经避雷器→接地极散入土壤</span>
+                            <span style="color:#94a3b8;">→</span>
+                            <span style="background:#dbeafe;padding:6px 18px;border-radius:30px;font-weight:600;color:#1d4ed8;">③ 被保护设备两端不会承受高压冲击，实现绝缘防护</span>
+                        </div>
+
+                        <h3 style="margin:24px 0 10px;color:#1e293b;">四、核心作用总结</h3>
+                        <div class="highlight-box">
+                            <p style="font-size:15.5px;line-height:1.9;margin:0;">
+                                <strong>避雷器是并联型过电压保护设备</strong>，依靠非线性电阻 <strong>“低压绝缘、高压导通”</strong> 的特性，
+                                泄放雷电流、限制残压，防止雷电冲击击穿电气设备绝缘。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Footer ===== -->
         <div class="footer">
-            <strong>由沐春风制作</strong> · 电力安全规程 · 逐题提交，即时反馈
+            <strong>由沐春风制作</strong> · 电力安全规程 · 逐题练习 + 原理图解
         </div>
     </div>
 
-    <!-- toast -->
+    <!-- ===== Toast ===== -->
     <div class="toast" id="toast"></div>
 
+    <!-- ============================================================
+    JavaScript
+    ============================================================ -->
     <script>
         // ============================================================
-        //  数据 (与之前保持一致)
+        //  1. 导航切换（一级 + 二级）
         // ============================================================
 
-        const fillData = [{
-            id: 1,
-            question: '电力线路检修带电导线电压在 10-35kV 时，距离检修的线路的安全距离为 ___ m。',
-            answers: ['1.0', '1'],
-            explanation: '安规 10～35kV 不停电检修安全距离 1m。'
-        }, {
-            id: 2,
-            question: '两根绝缘导线穿于同一根管时，管内径不应小于两根导线外径之和的 ___ 倍。',
-            answers: ['1.5', '1.5倍'],
-            explanation: '规范布线管径最低要求。'
-        }, {
-            id: 3,
-            question: '封闭母线水平敷设的支持点距不宜大于 ___ m。',
-            answers: ['1.5', '1.5m'],
-            explanation: '封闭母线水平敷设支持点距要求。'
-        }, {
-            id: 4,
-            question: '电动机不频繁启动时，不宜低于额定电压的 ___ %。',
-            answers: ['85', '85%'],
-            explanation: '电机启动压降规范，频繁启动 90%，不频繁 85%。'
-        }, {
-            id: 5,
-            question: 'GIS 充气柜采用绝缘灭弧性能优异的 ___ 气体作为绝缘和灭弧介质。',
-            answers: ['SF₆', '六氟化硫', 'SF6'],
-            explanation: '六氟化硫 (SF₆) 具有优异的绝缘和灭弧性能。'
-        }, {
-            id: 6,
-            question: '避雷器主要用于电气设备 ___ 保护。',
-            answers: ['雷电过电压', '雷击', '雷电过电压（雷击）'],
-            explanation: '避雷器用于防护雷电过电压（雷击）。'
-        }, {
-            id: 7,
-            question: '电流表又称 ___ ，电流表是用来测量电流的大小，单位为安培 (A)。',
-            answers: ['安培表'],
-            explanation: '电流表又称安培表。'
-        }, {
-            id: 8,
-            question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括：遥测、遥控、 ___ 。',
-            answers: ['遥信'],
-            explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。'
-        }, {
-            id: 9,
-            question: '容易发生火花、温度过高的电气设备，必须装在地面 ___ m 以上的位置。',
-            answers: ['2.5', '2.5m'],
-            explanation: '电气设备安装高度要求 ≥ 2.5m。'
-        }, {
-            id: 10,
-            question: '每台油量为 ___ kg 及以上的三相变压器，应装设在单独的变压器室内。',
-            answers: ['1000', '1000kg'],
-            explanation: '油量 1000kg 及以上变压器应单独设室。'
-        }, {
-            id: 11,
-            question: '拉线安装，拉线由多根组成时，每根受力应 ___ 。',
-            answers: ['均匀一致', '均匀'],
-            explanation: '多根拉线受力应均匀一致。'
-        }, {
-            id: 12,
-            question: '避雷针应平直，焊接应 ___ ，不应有裂缝、气孔及脱焊等缺陷。',
-            answers: ['饱满平整', '饱满'],
-            explanation: '避雷针焊接应饱满平整，无缺陷。'
-        }, {
-            id: 13,
-            question: '杆上避雷器的安装，1～10kV 引线相间距离不小于 ___ mm。',
-            answers: ['350', '350mm'],
-            explanation: '1～10kV 引线相间距离 ≥ 350mm。'
-        }, {
-            id: 14,
-            question: '螺栓的穿入方向， ___ 方向者由内向外。',
-            answers: ['水平'],
-            explanation: '水平方向螺栓由内向外穿入。'
-        }, {
-            id: 15,
-            question: '1kV 电缆的绝缘电阻不得少于 ___ MΩ。',
-            answers: ['0.5', '0.5MΩ'],
-            explanation: '1kV 电缆绝缘电阻 ≥ 0.5MΩ。'
-        }, {
-            id: 16,
-            question: '电力工作票的有效期不得超过 ___ 个工作日。',
-            answers: ['3', '3个'],
-            explanation: '电力工作票有效期 ≤ 3 个工作日。'
-        }, {
-            id: 17,
-            question: '接地线应用多股软铜线，导线截面积应符合短路电流要求，不得小于 ___ mm²。',
-            answers: ['25', '25mm²'],
-            explanation: '接地线截面 ≥ 25mm²。'
-        }];
+        // 一级导航
+        const mainTabs = document.querySelectorAll('#mainTabs .tab-btn');
+        const pages = {
+            practice: document.getElementById('pagePractice'),
+            study: document.getElementById('pageStudy')
+        };
 
-        const choiceData = [{
-            id: 1,
-            question: '变压器运行时，油温最高的部位是',
-            options: ['A、铁芯', 'B、绕组', 'C、上层绝缘油', 'D、下层绝缘油'],
-            answer: 1,
-            explanation: '绕组通电发热最严重，温度高于铁芯与上层油。'
-        }, {
-            id: 2,
-            question: '断路器和隔离开关的接地装置，接地电阻应不大于',
-            options: ['A、4Ω', 'B、8Ω', 'C、10Ω', 'D、30Ω'],
-            answer: 0,
-            explanation: '变配电设备工作接地 ≤ 4Ω。'
-        }, {
-            id: 3,
-            question: '高压电气设备是指电压等级在（  ）V 及以上者。',
-            options: ['A、250', 'B、400', 'C、1000', 'D、1500'],
-            answer: 2,
-            explanation: '电力标准 ≥ 1000V 为高压设备。'
-        }, {
-            id: 4,
-            question: '输电网一般由电压为（  ）kV 以上的主干电力线路组成。',
-            options: ['A、35', 'B、66', 'C、110', 'D、220'],
-            answer: 2,
-            explanation: '110kV 及以上属于输电网络，35kV 多为配电。'
-        }, {
-            id: 5,
-            question: '球头挂环属于',
-            options: ['A、连接金具', 'B、接续金具', 'C、保护金具', 'D、拉线金具'],
-            answer: 0,
-            explanation: '用于绝缘子与挂板之间连接。'
-        }, {
-            id: 6,
-            question: '杆架式变台又分为单杆变台、双杆变台和（  ）变台三种。',
-            options: ['A、台墩式', 'B、落地式', 'C、三杆式', 'D、架空式'],
-            answer: 2,
-            explanation: '杆架式变台分为单杆、双杆、三杆式。'
-        }, {
-            id: 7,
-            question: '低压电缆线路基本采用 VV22-0.6/1kV 型（  ）低压电缆。',
-            options: ['A、铝芯', 'B、铜芯', 'C、复合材质', 'D、控制'],
-            answer: 1,
-            explanation: '民用配电低压电缆主流铜芯 VV22。'
-        }, {
-            id: 8,
-            question: '变压器一、二次电流之比与一、二次绕组的匝数',
-            options: ['A、成正比', 'B、成反比', 'C、不成比例', 'D、无关系'],
-            answer: 1,
-            explanation: 'I₁/I₂ = N₂/N₁，电流与匝数成反比。'
-        }, {
-            id: 9,
-            question: '当跌落式熔断器断开后，带电部分至台面的最小距离不应低于',
-            options: ['A、2.5m', 'B、3m', 'C、3.5m', 'D、4m'],
-            answer: 0,
-            explanation: '跌落式熔断器断开后，带电部分至台面 ≥ 2.5m。'
-        }, {
-            id: 10,
-            question: '单杆变电台用于容量为（  ）及以下的变压器。',
-            options: ['A、30kV·A', 'B、50kV·A', 'C、60kV·A', 'D、100kV·A'],
-            answer: 3,
-            explanation: '单杆变电台容量 ≤ 100kV·A。'
-        }, {
-            id: 11,
-            question: '变压器低压侧熔体可按其额定电流或过负荷（  ）选用。',
-            options: ['A、10%', 'B、20%', 'C、30%', 'D、40%'],
-            answer: 1,
-            explanation: '低压侧熔体按额定电流或过负荷 20% 选用。'
-        }, {
-            id: 12,
-            question: '钢筋混凝土杆（水泥杆）分为等径杆和（  ）两种。',
-            options: ['A、拔梢整杆', 'B、分段梢杆', 'C、分段等径杆', 'D、拔稍杆'],
-            answer: 3,
-            explanation: '水泥杆分为等径杆和拔稍杆。'
-        }, {
-            id: 13,
-            question: '双杆变台比单杆变台坚固，可安装（  ）kVA 的变压器。',
-            options: ['A、50-315', 'B、50-200', 'C、63-315', 'D、63-200'],
-            answer: 0,
-            explanation: '双杆变台可安装 50-315kVA 变压器。'
-        }, {
-            id: 14,
-            question: '已经立起的电杆，只有在杆基（  ）后，方可撤去叉杆及拉绳。',
-            options: ['A、平整', 'B、回填', 'C、回填夯实', 'D、回填平整'],
-            answer: 2,
-            explanation: '必须夯实防止倾倒。'
-        }, {
-            id: 15,
-            question: '变电台距易燃易爆危险场所的距离，在一般情况下不应小于',
-            options: ['A、20m', 'B、30m', 'C、40m', 'D、50m'],
-            answer: 1,
-            explanation: '变电台距易燃易爆场所 ≥ 30m。'
-        }, {
-            id: 16,
-            question: '高压干线电缆截面不应小于',
-            options: ['A、10mm²', 'B、12mm²', 'C、14mm²', 'D、16mm²'],
-            answer: 3,
-            explanation: '高压干线电缆截面 ≥ 16mm²。'
-        }, {
-            id: 17,
-            question: '低压试电笔一般适用于交直流电压在（  ）以下。',
-            options: ['A、220V', 'B、380V', 'C、500V', 'D、550V'],
-            answer: 2,
-            explanation: '低压试电笔适用于 500V 以下。'
-        }];
+        mainTabs.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+                mainTabs.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                Object.keys(pages).forEach(key => {
+                    pages[key].classList.toggle('show', key === tab);
+                });
+                // 如果切换到 study，确保第一个子标签激活
+                if (tab === 'study') {
+                    const activeSub = document.querySelector('#subTabs .sub-btn.active');
+                    if (!activeSub) {
+                        document.querySelector('#subTabs .sub-btn').click();
+                    }
+                }
+            });
+        });
 
-        const judgeData = [{
-            id: 1,
-            question: '松软土质的杆坑深度超过 1m 时，应有防止塌陷措施。',
-            answer: true,
-            explanation: '松软土质深坑需防塌陷。'
-        }, {
-            id: 2,
-            question: '阀型避雷器间隙是由内部间隙和外部间隙组成。',
-            answer: true,
-            explanation: '阀型避雷器间隙由内部间隙和外部间隙组成。'
-        }, {
-            id: 3,
-            question: '当熔断器的熔体烧断后应马上更换熔丝。',
-            answer: false,
-            explanation: '需查明短路/过载故障，消除故障后再更换，不可直接换。'
-        }, {
-            id: 4,
-            question: '在中性点直接接地的三相四线制系统中，电气设备外壳接地良好可以保证人身安全。',
-            answer: true,
-            explanation: '故障时外壳电位快速拉至大地，限制接触电压。'
-        }, {
-            id: 5,
-            question: '遇雨、雪、重雾、霾等天气，或空气相对湿度大于 85% 时，一般不进行间接带电作业。',
-            answer: true,
-            explanation: '恶劣天气或高湿度不宜间接带电作业。'
-        }, {
-            id: 6,
-            question: '电缆在隧道内敷设钢索每隔 300～500m 应设耐张段。',
-            answer: true,
-            explanation: '隧道内钢索每 300～500m 设耐张段。'
-        }, {
-            id: 7,
-            question: '模拟量信号经过 A/D 转换器转化为数字量之后由接口送往计算机。',
-            answer: true,
-            explanation: 'A/D 转换将模拟量转为数字量送计算机。'
-        }, {
-            id: 8,
-            question: '在线路旁边临时设置的信号牌、灯叫移动信号。',
-            answer: true,
-            explanation: '临时信号牌、灯属于移动信号。'
-        }, {
-            id: 9,
-            question: '绝缘导线跨越人行道时，其对地面最小距离不小于 3.5 m。',
-            answer: true,
-            explanation: '绝缘导线跨越人行道 ≥ 3.5m。'
-        }, {
-            id: 10,
-            question: '表示开关设备断开的指示信号不亮，经常接入的电压表无电压显示可作为设备无电的依据。',
-            answer: false,
-            explanation: '仅指示灯、电压表不能单独判定无电，必须验电器实测。'
-        }, {
-            id: 11,
-            question: '在开关柜内挂接地线后，应在开关柜的门上悬挂 "已接地" 的标示牌。',
-            answer: true,
-            explanation: '挂接地线后应悬挂 "已接地" 标示牌。'
-        }, {
-            id: 12,
-            question: '非直接接地的电力网属于大接地短路电流系统。',
-            answer: false,
-            explanation: '不接地/消弧线圈是小接地系统；中性点直接接地才是大接地。'
-        }, {
-            id: 13,
-            question: '电阻的发热取决于一个周期内的平均功率而不取决于瞬时功率。',
-            answer: true,
-            explanation: '热量是功率对时间积分，发热看平均有功。'
-        }, {
-            id: 14,
-            question: '同一交流回路的导线，应穿入不同的钢管内。',
-            answer: false,
-            explanation: '同一回路必须同管，防止钢管涡流发热。'
-        }, {
-            id: 15,
-            question: '两个同频率的正弦量，同时达到最大值时，它们是同相的。',
-            answer: true,
-            explanation: '同频正弦量同时达最大值即为同相。'
-        }];
+        // 二级导航 (学习模块)
+        const subTabs = document.querySelectorAll('#subTabs .sub-btn');
+        const subPages = {
+            transformer: document.getElementById('subTransformer'),
+            arrester: document.getElementById('subArrester')
+        };
+
+        subTabs.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const sub = this.dataset.sub;
+                subTabs.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                Object.keys(subPages).forEach(key => {
+                    subPages[key].classList.toggle('show', key === sub);
+                });
+            });
+        });
 
         // ============================================================
-        //  状态管理
+        //  2. 在线练习模块 (完整保留原测验逻辑)
         // ============================================================
 
+        // ---------- 数据 ----------
+        const fillData = [
+            { id: 1, question: '电力线路检修带电导线电压在 10-35kV 时，距离检修的线路的安全距离为 ___ m。', answers: ['1.0', '1'],
+                explanation: '安规 10～35kV 不停电检修安全距离 1m。' },
+            { id: 2, question: '两根绝缘导线穿于同一根管时，管内径不应小于两根导线外径之和的 ___ 倍。', answers: ['1.5', '1.5倍'],
+                explanation: '规范布线管径最低要求。' },
+            { id: 3, question: '封闭母线水平敷设的支持点距不宜大于 ___ m。', answers: ['1.5', '1.5m'],
+                explanation: '封闭母线水平敷设支持点距要求。' },
+            { id: 4, question: '电动机不频繁启动时，不宜低于额定电压的 ___ %。', answers: ['85', '85%'],
+                explanation: '电机启动压降规范，频繁启动 90%，不频繁 85%。' },
+            { id: 5, question: 'GIS 充气柜采用绝缘灭弧性能优异的 ___ 气体作为绝缘和灭弧介质。', answers: ['SF₆', '六氟化硫', 'SF6'],
+                explanation: '六氟化硫 (SF₆) 具有优异的绝缘和灭弧性能。' },
+            { id: 6, question: '避雷器主要用于电气设备 ___ 保护。', answers: ['雷电过电压', '雷击', '雷电过电压（雷击）'],
+                explanation: '避雷器用于防护雷电过电压（雷击）。' },
+            { id: 7, question: '电流表又称 ___ ，电流表是用来测量电流的大小，单位为安培 (A)。', answers: ['安培表'],
+                explanation: '电流表又称安培表。' },
+            { id: 8, question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括：遥测、遥控、 ___ 。', answers: ['遥信'],
+                explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。' },
+            { id: 9, question: '容易发生火花、温度过高的电气设备，必须装在地面 ___ m 以上的位置。', answers: ['2.5', '2.5m'],
+                explanation: '电气设备安装高度要求 ≥ 2.5m。' },
+            { id: 10, question: '每台油量为 ___ kg 及以上的三相变压器，应装设在单独的变压器室内。', answers: ['1000', '1000kg'],
+                explanation: '油量 1000kg 及以上变压器应单独设室。' },
+            { id: 11, question: '拉线安装，拉线由多根组成时，每根受力应 ___ 。', answers: ['均匀一致', '均匀'],
+                explanation: '多根拉线受力应均匀一致。' },
+            { id: 12, question: '避雷针应平直，焊接应 ___ ，不应有裂缝、气孔及脱焊等缺陷。', answers: ['饱满平整', '饱满'],
+                explanation: '避雷针焊接应饱满平整，无缺陷。' },
+            { id: 13, question: '杆上避雷器的安装，1～10kV 引线相间距离不小于 ___ mm。', answers: ['350', '350mm'],
+                explanation: '1～10kV 引线相间距离 ≥ 350mm。' },
+            { id: 14, question: '螺栓的穿入方向， ___ 方向者由内向外。', answers: ['水平'], explanation: '水平方向螺栓由内向外穿入。' },
+            { id: 15, question: '1kV 电缆的绝缘电阻不得少于 ___ MΩ。', answers: ['0.5', '0.5MΩ'],
+                explanation: '1kV 电缆绝缘电阻 ≥ 0.5MΩ。' },
+            { id: 16, question: '电力工作票的有效期不得超过 ___ 个工作日。', answers: ['3', '3个'],
+                explanation: '电力工作票有效期 ≤ 3 个工作日。' },
+            { id: 17, question: '接地线应用多股软铜线，导线截面积应符合短路电流要求，不得小于 ___ mm²。', answers: ['25', '25mm²'],
+                explanation: '接地线截面 ≥ 25mm²。' }
+        ];
+
+        const choiceData = [
+            { id: 1, question: '变压器运行时，油温最高的部位是', options: ['A、铁芯', 'B、绕组', 'C、上层绝缘油', 'D、下层绝缘油'],
+                answer: 1, explanation: '绕组通电发热最严重，温度高于铁芯与上层油。' },
+            { id: 2, question: '断路器和隔离开关的接地装置，接地电阻应不大于', options: ['A、4Ω', 'B、8Ω', 'C、10Ω', 'D、30Ω'],
+                answer: 0, explanation: '变配电设备工作接地 ≤ 4Ω。' },
+            { id: 3, question: '高压电气设备是指电压等级在（  ）V 及以上者。', options: ['A、250', 'B、400', 'C、1000', 'D、1500'],
+                answer: 2, explanation: '电力标准 ≥ 1000V 为高压设备。' },
+            { id: 4, question: '输电网一般由电压为（  ）kV 以上的主干电力线路组成。', options: ['A、35', 'B、66', 'C、110', 'D、220'],
+                answer: 2, explanation: '110kV 及以上属于输电网络，35kV 多为配电。' },
+            { id: 5, question: '球头挂环属于', options: ['A、连接金具', 'B、接续金具', 'C、保护金具', 'D、拉线金具'],
+                answer: 0, explanation: '用于绝缘子与挂板之间连接。' },
+            { id: 6, question: '杆架式变台又分为单杆变台、双杆变台和（  ）变台三种。', options: ['A、台墩式', 'B、落地式', 'C、三杆式', 'D、架空式'],
+                answer: 2, explanation: '杆架式变台分为单杆、双杆、三杆式。' },
+            { id: 7, question: '低压电缆线路基本采用 VV22-0.6/1kV 型（  ）低压电缆。', options: ['A、铝芯', 'B、铜芯', 'C、复合材质',
+                    'D、控制'], answer: 1, explanation: '民用配电低压电缆主流铜芯 VV22。' },
+            { id: 8, question: '变压器一、二次电流之比与一、二次绕组的匝数', options: ['A、成正比', 'B、成反比', 'C、不成比例', 'D、无关系'],
+                answer: 1, explanation: 'I₁/I₂ = N₂/N₁，电流与匝数成反比。' },
+            { id: 9, question: '当跌落式熔断器断开后，带电部分至台面的最小距离不应低于', options: ['A、2.5m', 'B、3m', 'C、3.5m', 'D、4m'],
+                answer: 0, explanation: '跌落式熔断器断开后，带电部分至台面 ≥ 2.5m。' },
+            { id: 10, question: '单杆变电台用于容量为（  ）及以下的变压器。', options: ['A、30kV·A', 'B、50kV·A', 'C、60kV·A',
+                    'D、100kV·A'], answer: 3, explanation: '单杆变电台容量 ≤ 100kV·A。' },
+            { id: 11, question: '变压器低压侧熔体可按其额定电流或过负荷（  ）选用。', options: ['A、10%', 'B、20%', 'C、30%', 'D、40%'],
+                answer: 1, explanation: '低压侧熔体按额定电流或过负荷 20% 选用。' },
+            { id: 12, question: '钢筋混凝土杆（水泥杆）分为等径杆和（  ）两种。', options: ['A、拔梢整杆', 'B、分段梢杆', 'C、分段等径杆',
+                    'D、拔稍杆'], answer: 3, explanation: '水泥杆分为等径杆和拔稍杆。' },
+            { id: 13, question: '双杆变台比单杆变台坚固，可安装（  ）kVA 的变压器。', options: ['A、50-315', 'B、50-200', 'C、63-315',
+                    'D、63-200'], answer: 0, explanation: '双杆变台可安装 50-315kVA 变压器。' },
+            { id: 14, question: '已经立起的电杆，只有在杆基（  ）后，方可撤去叉杆及拉绳。', options: ['A、平整', 'B、回填', 'C、回填夯实',
+                    'D、回填平整'], answer: 2, explanation: '必须夯实防止倾倒。' },
+            { id: 15, question: '变电台距易燃易爆危险场所的距离，在一般情况下不应小于', options: ['A、20m', 'B、30m', 'C、40m', 'D、50m'],
+                answer: 1, explanation: '变电台距易燃易爆场所 ≥ 30m。' },
+            { id: 16, question: '高压干线电缆截面不应小于', options: ['A、10mm²', 'B、12mm²', 'C、14mm²', 'D、16mm²'],
+                answer: 3, explanation: '高压干线电缆截面 ≥ 16mm²。' },
+            { id: 17, question: '低压试电笔一般适用于交直流电压在（  ）以下。', options: ['A、220V', 'B、380V', 'C、500V', 'D、550V'],
+                answer: 2, explanation: '低压试电笔适用于 500V 以下。' }
+        ];
+
+        const judgeData = [
+            { id: 1, question: '松软土质的杆坑深度超过 1m 时，应有防止塌陷措施。', answer: true,
+            explanation: '松软土质深坑需防塌陷。' },
+            { id: 2, question: '阀型避雷器间隙是由内部间隙和外部间隙组成。', answer: true,
+                explanation: '阀型避雷器间隙由内部间隙和外部间隙组成。' },
+            { id: 3, question: '当熔断器的熔体烧断后应马上更换熔丝。', answer: false,
+                explanation: '需查明短路/过载故障，消除故障后再更换，不可直接换。' },
+            { id: 4, question: '在中性点直接接地的三相四线制系统中，电气设备外壳接地良好可以保证人身安全。', answer: true,
+                explanation: '故障时外壳电位快速拉至大地，限制接触电压。' },
+            { id: 5, question: '遇雨、雪、重雾、霾等天气，或空气相对湿度大于 85% 时，一般不进行间接带电作业。', answer: true,
+                explanation: '恶劣天气或高湿度不宜间接带电作业。' },
+            { id: 6, question: '电缆在隧道内敷设钢索每隔 300～500m 应设耐张段。', answer: true,
+                explanation: '隧道内钢索每 300～500m 设耐张段。' },
+            { id: 7, question: '模拟量信号经过 A/D 转换器转化为数字量之后由接口送往计算机。', answer: true,
+                explanation: 'A/D 转换将模拟量转为数字量送计算机。' },
+            { id: 8, question: '在线路旁边临时设置的信号牌、灯叫移动信号。', answer: true,
+                explanation: '临时信号牌、灯属于移动信号。' },
+            { id: 9, question: '绝缘导线跨越人行道时，其对地面最小距离不小于 3.5 m。', answer: true,
+                explanation: '绝缘导线跨越人行道 ≥ 3.5m。' },
+            { id: 10, question: '表示开关设备断开的指示信号不亮，经常接入的电压表无电压显示可作为设备无电的依据。', answer: false,
+                explanation: '仅指示灯、电压表不能单独判定无电，必须验电器实测。' },
+            { id: 11, question: '在开关柜内挂接地线后，应在开关柜的门上悬挂 "已接地" 的标示牌。', answer: true,
+                explanation: '挂接地线后应悬挂 "已接地" 标示牌。' },
+            { id: 12, question: '非直接接地的电力网属于大接地短路电流系统。', answer: false,
+                explanation: '不接地/消弧线圈是小接地系统；中性点直接接地才是大接地。' },
+            { id: 13, question: '电阻的发热取决于一个周期内的平均功率而不取决于瞬时功率。', answer: true,
+                explanation: '热量是功率对时间积分，发热看平均有功。' },
+            { id: 14, question: '同一交流回路的导线，应穿入不同的钢管内。', answer: false,
+                explanation: '同一回路必须同管，防止钢管涡流发热。' },
+            { id: 15, question: '两个同频率的正弦量，同时达到最大值时，它们是同相的。', answer: true,
+                explanation: '同频正弦量同时达最大值即为同相。' }
+        ];
+
+        // ---------- 状态 ----------
         let allQuestions = [];
-        let isGlobalSubmitted = false;
 
         function buildQuestions() {
             const qs = [];
             fillData.forEach(item => {
-                qs.push({
-                    type: 'fill',
-                    id: item.id,
-                    displayId: `F${item.id}`,
-                    data: item,
-                    userAnswer: '',
-                    status: 'pending' // pending | correct | wrong
-                });
+                qs.push({ type: 'fill', id: item.id, displayId: `F${item.id}`, data: item, userAnswer: '',
+                    status: 'pending' });
             });
             choiceData.forEach(item => {
-                qs.push({
-                    type: 'choice',
-                    id: item.id,
-                    displayId: `C${item.id}`,
-                    data: item,
-                    userAnswer: null,
-                    status: 'pending'
-                });
+                qs.push({ type: 'choice', id: item.id, displayId: `C${item.id}`, data: item, userAnswer: null,
+                    status: 'pending' });
             });
             judgeData.forEach(item => {
-                qs.push({
-                    type: 'judge',
-                    id: item.id,
-                    displayId: `J${item.id}`,
-                    data: item,
-                    userAnswer: null,
-                    status: 'pending'
-                });
+                qs.push({ type: 'judge', id: item.id, displayId: `J${item.id}`, data: item, userAnswer: null,
+                    status: 'pending' });
             });
             return qs;
         }
@@ -967,7 +1091,7 @@
         allQuestions = buildQuestions();
         const initialQuestions = JSON.parse(JSON.stringify(allQuestions));
 
-        // DOM refs
+        // DOM 引用
         const container = document.getElementById('questionsContainer');
         const totalCountEl = document.getElementById('totalCount');
         const doneCountEl = document.getElementById('doneCount');
@@ -981,17 +1105,19 @@
 
         let toastTimer = null;
 
-        // ============================================================
-        //  工具函数
-        // ============================================================
-
         function showToast(msg, duration = 2800) {
             toastEl.textContent = msg;
             toastEl.classList.add('show');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                toastEl.classList.remove('show');
-            }, duration);
+            toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+        }
+
+        function getAnswered(q) {
+            if (q.type === 'fill') {
+                return q.userAnswer && q.userAnswer.trim().length > 0;
+            } else {
+                return q.userAnswer !== null && q.userAnswer !== undefined;
+            }
         }
 
         function calculateCorrectness(q) {
@@ -1000,15 +1126,11 @@
                 const userAns = (q.userAnswer || '').trim();
                 if (!userAns) return false;
                 const normalizedUser = userAns.replace(/\s/g, '').toLowerCase();
-                // 直接匹配
                 for (let ans of data.answers) {
                     const normAns = ans.replace(/\s/g, '').toLowerCase();
                     if (normalizedUser === normAns || normalizedUser.includes(normAns) || normAns.includes(
-                            normalizedUser)) {
-                        return true;
-                    }
+                            normalizedUser)) return true;
                 }
-                // 数字模糊匹配
                 const numUser = parseFloat(userAns);
                 if (!isNaN(numUser)) {
                     for (let ans of data.answers) {
@@ -1016,7 +1138,6 @@
                         if (!isNaN(numAns) && Math.abs(numUser - numAns) < 0.01) return true;
                     }
                 }
-                // 括号内匹配
                 for (let ans of data.answers) {
                     const match = ans.match(/[（(]([^）)]+)[）)]/);
                     if (match) {
@@ -1032,18 +1153,6 @@
             }
             return false;
         }
-
-        function getAnswered(q) {
-            if (q.type === 'fill') {
-                return q.userAnswer && q.userAnswer.trim().length > 0;
-            } else {
-                return q.userAnswer !== null && q.userAnswer !== undefined;
-            }
-        }
-
-        // ============================================================
-        //  统计 & 分数
-        // ============================================================
 
         function updateStats() {
             const total = allQuestions.length;
@@ -1066,17 +1175,12 @@
 
         function updateScore() {
             let correct = 0;
-            allQuestions.forEach(q => {
-                if (q.status === 'correct') correct++;
-            });
+            allQuestions.forEach(q => { if (q.status === 'correct') correct++; });
             scoreNumEl.textContent = correct;
             totalScoreEl.textContent = allQuestions.length;
         }
 
-        // ============================================================
-        //  单题提交
-        // ============================================================
-
+        // ---------- 单题提交 ----------
         function submitSingle(index) {
             const q = allQuestions[index];
             if (!q) return;
@@ -1084,15 +1188,9 @@
                 showToast('这道题已经提交过了', 1500);
                 return;
             }
-
-            // 检查是否作答
             if (!getAnswered(q)) {
-                if (q.type === 'fill') {
-                    showToast('✏️ 请先填写答案', 1500);
-                } else {
-                    showToast('👆 请先选择一个选项', 1500);
-                }
-                // 高亮卡片
+                if (q.type === 'fill') showToast('✏️ 请先填写答案', 1500);
+                else showToast('👆 请先选择一个选项', 1500);
                 const cards = document.querySelectorAll('.q-card');
                 cards.forEach(card => {
                     if (parseInt(card.dataset.index) === index) {
@@ -1106,11 +1204,8 @@
 
             const isCorrect = calculateCorrectness(q);
             q.status = isCorrect ? 'correct' : 'wrong';
-
-            // 重新渲染该卡片（或全量渲染）
             render();
 
-            // 滚动到该卡片并闪烁反馈
             const cards = document.querySelectorAll('.q-card');
             cards.forEach(card => {
                 if (parseInt(card.dataset.index) === index) {
@@ -1125,7 +1220,6 @@
             updateStats();
             updateScore();
 
-            // 检查是否全部答完
             const allDone = allQuestions.every(q => q.status === 'correct' || q.status === 'wrong');
             if (allDone) {
                 const correct = allQuestions.filter(q => q.status === 'correct').length;
@@ -1138,21 +1232,14 @@
             }
         }
 
-        // ============================================================
-        //  全局提交
-        // ============================================================
-
+        // ---------- 全局提交 ----------
         function submitAllRemaining() {
-            // 检查是否有未答的
             const missingIndices = [];
             allQuestions.forEach((q, idx) => {
-                if (q.status === 'pending' && !getAnswered(q)) {
-                    missingIndices.push(idx);
-                }
+                if (q.status === 'pending' && !getAnswered(q)) missingIndices.push(idx);
             });
 
             if (missingIndices.length > 0) {
-                // 高亮缺失
                 document.querySelectorAll('.q-card.missing').forEach(el => el.classList.remove('missing'));
                 missingIndices.forEach(idx => {
                     const cards = document.querySelectorAll('.q-card');
@@ -1169,7 +1256,6 @@
                 return;
             }
 
-            // 提交所有 pending 题目
             let anySubmitted = false;
             allQuestions.forEach((q, idx) => {
                 if (q.status === 'pending') {
@@ -1194,17 +1280,11 @@
             updateScore();
             submitBtn.disabled = true;
             submitBtn.textContent = '✅ 全部已答';
-            isGlobalSubmitted = true;
         }
 
-        // ============================================================
-        //  渲染
-        // ============================================================
-
+        // ---------- 渲染 ----------
         function render() {
             container.innerHTML = '';
-            const total = allQuestions.length;
-
             const fillItems = allQuestions.filter(q => q.type === 'fill');
             const choiceItems = allQuestions.filter(q => q.type === 'choice');
             const judgeItems = allQuestions.filter(q => q.type === 'judge');
@@ -1212,35 +1292,34 @@
             if (fillItems.length) {
                 const sec = createSection('📝 填空题', 'fill', fillItems.length);
                 container.appendChild(sec);
-                fillItems.forEach((q, idx) => {
-                    const card = createFillCard(q, allQuestions.indexOf(q));
+                fillItems.forEach((q) => {
+                    const idx = allQuestions.indexOf(q);
+                    const card = createFillCard(q, idx);
                     sec.appendChild(card);
                 });
             }
-
             if (choiceItems.length) {
                 const sec = createSection('🔘 单选题', 'choice', choiceItems.length);
                 container.appendChild(sec);
-                choiceItems.forEach((q, idx) => {
-                    const card = createChoiceCard(q, allQuestions.indexOf(q));
+                choiceItems.forEach((q) => {
+                    const idx = allQuestions.indexOf(q);
+                    const card = createChoiceCard(q, idx);
                     sec.appendChild(card);
                 });
             }
-
             if (judgeItems.length) {
                 const sec = createSection('⚖️ 判断题', 'judge', judgeItems.length);
                 container.appendChild(sec);
-                judgeItems.forEach((q, idx) => {
-                    const card = createJudgeCard(q, allQuestions.indexOf(q));
+                judgeItems.forEach((q) => {
+                    const idx = allQuestions.indexOf(q);
+                    const card = createJudgeCard(q, idx);
                     sec.appendChild(card);
                 });
             }
 
-            // 更新统计
             updateStats();
             updateScore();
 
-            // 如果全部已提交，禁用全局按钮
             const allDone = allQuestions.every(q => q.status === 'correct' || q.status === 'wrong');
             if (allDone) {
                 submitBtn.disabled = true;
@@ -1254,66 +1333,49 @@
         function createSection(title, type, count) {
             const div = document.createElement('div');
             const badgeMap = { fill: 'fill', choice: 'choice', judge: 'judge' };
-            div.innerHTML = `
-                <div class="section-title">
-                    ${title}
-                    <span class="badge ${badgeMap[type] || ''}">${count} 题</span>
-                </div>
-            `;
+            div.innerHTML =
+                `<div class="section-title">${title}<span class="badge ${badgeMap[type]||''}">${count} 题</span></div>`;
             return div.firstElementChild ? div.firstElementChild.parentNode : div;
         }
 
-        // ----- 填空题卡片 -----
+        // 填空题卡片
         function createFillCard(q, globalIdx) {
             const card = document.createElement('div');
             card.className = 'q-card';
             card.dataset.index = globalIdx;
-            card.dataset.type = 'fill';
-
             const data = q.data;
             const parts = data.question.split('___');
             const qText = parts.length === 2 ?
-                `${parts[0]}<span class="fill-wrap"><input class="fill-input" type="text" placeholder="填写答案" data-qidx="${globalIdx}" value="${q.userAnswer || ''}" ${q.status !== 'pending' ? 'disabled' : ''}></span>${parts[1]}` :
-                data.question.replace('___', `<span class="fill-wrap"><input class="fill-input" type="text" placeholder="填写答案" data-qidx="${globalIdx}" value="${q.userAnswer || ''}" ${q.status !== 'pending' ? 'disabled' : ''}></span>`);
-
+                `${parts[0]}<span class="fill-wrap"><input class="fill-input" type="text" placeholder="填写答案" data-qidx="${globalIdx}" value="${q.userAnswer||''}" ${q.status!=='pending'?'disabled':''}></span>${parts[1]}` :
+                data.question.replace('___',
+                    `<span class="fill-wrap"><input class="fill-input" type="text" placeholder="填写答案" data-qidx="${globalIdx}" value="${q.userAnswer||''}" ${q.status!=='pending'?'disabled':''}></span>`
+                    );
             const isSubmitted = q.status !== 'pending';
             const statusHtml = isSubmitted ?
-                `<span class="status-badge ${q.status}">${q.status === 'correct' ? '✅ 正确' : '❌ 错误'}</span>` :
-                '';
+                `<span class="status-badge ${q.status}">${q.status==='correct'?'✅ 正确':'❌ 错误'}</span>` : '';
 
             card.innerHTML = `
-                <div class="q-header">
-                    <span class="q-number">${q.displayId}</span>
-                    <span class="q-text">${qText}</span>
-                </div>
-                <div class="single-actions">
-                    ${!isSubmitted ? `<button class="btn-confirm-single" data-qidx="${globalIdx}"><span class="icon">✔️</span> 确认答案</button>` : ''}
-                    ${statusHtml}
-                </div>
-                <div class="explanation ${isSubmitted ? 'show' : ''}" id="exp-${globalIdx}">
-                    <span class="exp-label">📖 解析：</span>
-                    <span class="exp-text">${data.explanation}</span>
+                <div class="q-header"><span class="q-number">${q.displayId}</span><span class="q-text">${qText}</span></div>
+                <div class="single-actions">${!isSubmitted?`<button class="btn-confirm-single" data-qidx="${globalIdx}"><span class="icon">✔️</span> 确认答案</button>`:''}${statusHtml}</div>
+                <div class="explanation ${isSubmitted?'show':''}" id="exp-${globalIdx}">
+                    <span class="exp-label">📖 解析：</span><span class="exp-text">${data.explanation}</span>
                     <br><span class="exp-label">✅ 参考答案：</span>
-                    <span class="exp-answer ${q.status === 'correct' ? 'correct-ans' : q.status === 'wrong' ? 'wrong-ans' : ''}">${data.answers.join(' 或 ')}</span>
+                    <span class="exp-answer ${q.status==='correct'?'correct-ans':q.status==='wrong'?'wrong-ans':''}">${data.answers.join(' 或 ')}</span>
                 </div>
             `;
-
             const input = card.querySelector('.fill-input');
             if (input) {
-                input.addEventListener('input', function(e) {
+                input.addEventListener('input', function() {
                     if (this.disabled) return;
                     const idx = parseInt(this.dataset.qidx);
                     allQuestions[idx].userAnswer = this.value;
-                    // 清除高亮
                     card.classList.remove('missing');
                     updateStats();
                     updateScore();
                 });
-                // 如果已提交，添加样式
                 if (q.status === 'correct') input.classList.add('correct');
                 if (q.status === 'wrong') input.classList.add('wrong');
             }
-
             const btn = card.querySelector('.btn-confirm-single');
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -1321,21 +1383,16 @@
                     submitSingle(idx);
                 });
             }
-
             return card;
         }
 
-        // ----- 单选题卡片 -----
+        // 单选题卡片
         function createChoiceCard(q, globalIdx) {
             const card = document.createElement('div');
             card.className = 'q-card';
             card.dataset.index = globalIdx;
-            card.dataset.type = 'choice';
-
             const data = q.data;
             const isSubmitted = q.status !== 'pending';
-            const labels = ['A', 'B', 'C', 'D'];
-
             let optionsHtml = '';
             data.options.forEach((opt, oi) => {
                 let cls = 'opt';
@@ -1349,28 +1406,18 @@
                 }
                 optionsHtml += `<span class="${cls}" data-optidx="${oi}" data-qidx="${globalIdx}">${opt}</span>`;
             });
-
             const statusHtml = isSubmitted ?
-                `<span class="status-badge ${q.status}">${q.status === 'correct' ? '✅ 正确' : '❌ 错误'}</span>` :
-                '';
-
+                `<span class="status-badge ${q.status}">${q.status==='correct'?'✅ 正确':'❌ 错误'}</span>` : '';
             card.innerHTML = `
-                <div class="q-header">
-                    <span class="q-number">${q.displayId}</span>
-                    <span class="q-text">${data.question}</span>
-                </div>
+                <div class="q-header"><span class="q-number">${q.displayId}</span><span class="q-text">${data.question}</span></div>
                 <div class="options">${optionsHtml}</div>
-                <div class="single-actions">
-                    ${statusHtml}
-                </div>
-                <div class="explanation ${isSubmitted ? 'show' : ''}" id="exp-${globalIdx}">
-                    <span class="exp-label">📖 解析：</span>
-                    <span class="exp-text">${data.explanation}</span>
+                <div class="single-actions">${statusHtml}</div>
+                <div class="explanation ${isSubmitted?'show':''}" id="exp-${globalIdx}">
+                    <span class="exp-label">📖 解析：</span><span class="exp-text">${data.explanation}</span>
                     <br><span class="exp-label">✅ 正确答案：</span>
-                    <span class="exp-answer ${q.status === 'correct' ? 'correct-ans' : q.status === 'wrong' ? 'wrong-ans' : ''}">${data.options[data.answer]}</span>
+                    <span class="exp-answer ${q.status==='correct'?'correct-ans':q.status==='wrong'?'wrong-ans':''}">${data.options[data.answer]}</span>
                 </div>
             `;
-
             if (!isSubmitted) {
                 const optEls = card.querySelectorAll('.opt');
                 optEls.forEach(el => {
@@ -1378,7 +1425,6 @@
                         if (this.classList.contains('disabled')) return;
                         const idx = parseInt(this.dataset.qidx);
                         const oi = parseInt(this.dataset.optidx);
-                        // 选中
                         const parent = this.parentElement;
                         parent.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
                         this.classList.add('selected');
@@ -1386,28 +1432,23 @@
                         card.classList.remove('missing');
                         updateStats();
                         updateScore();
-                        // 自动提交该题（选择题点击即提交）
                         submitSingle(idx);
                     });
                 });
             }
-
             return card;
         }
 
-        // ----- 判断题卡片 -----
+        // 判断题卡片
         function createJudgeCard(q, globalIdx) {
             const card = document.createElement('div');
             card.className = 'q-card';
             card.dataset.index = globalIdx;
-            card.dataset.type = 'judge';
-
             const data = q.data;
             const isSubmitted = q.status !== 'pending';
             const userVal = q.userAnswer;
-
-            let trueCls = 'jbtn';
-            let falseCls = 'jbtn';
+            let trueCls = 'jbtn',
+                falseCls = 'jbtn';
             if (isSubmitted) {
                 trueCls += ' disabled';
                 falseCls += ' disabled';
@@ -1425,31 +1466,21 @@
             }
             trueCls = trueCls.trim();
             falseCls = falseCls.trim();
-
             const statusHtml = isSubmitted ?
-                `<span class="status-badge ${q.status}">${q.status === 'correct' ? '✅ 正确' : '❌ 错误'}</span>` :
-                '';
-
+                `<span class="status-badge ${q.status}">${q.status==='correct'?'✅ 正确':'❌ 错误'}</span>` : '';
             card.innerHTML = `
-                <div class="q-header">
-                    <span class="q-number">${q.displayId}</span>
-                    <span class="q-text">${data.question}</span>
-                </div>
+                <div class="q-header"><span class="q-number">${q.displayId}</span><span class="q-text">${data.question}</span></div>
                 <div class="judge-btns">
                     <span class="${trueCls}" data-val="true" data-qidx="${globalIdx}"><span class="icon">✅</span> 正确</span>
                     <span class="${falseCls}" data-val="false" data-qidx="${globalIdx}"><span class="icon">❌</span> 错误</span>
                 </div>
-                <div class="single-actions">
-                    ${statusHtml}
-                </div>
-                <div class="explanation ${isSubmitted ? 'show' : ''}" id="exp-${globalIdx}">
-                    <span class="exp-label">📖 解析：</span>
-                    <span class="exp-text">${data.explanation}</span>
+                <div class="single-actions">${statusHtml}</div>
+                <div class="explanation ${isSubmitted?'show':''}" id="exp-${globalIdx}">
+                    <span class="exp-label">📖 解析：</span><span class="exp-text">${data.explanation}</span>
                     <br><span class="exp-label">✅ 正确答案：</span>
-                    <span class="exp-answer ${q.status === 'correct' ? 'correct-ans' : q.status === 'wrong' ? 'wrong-ans' : ''}">${data.answer ? '正确 ✅' : '错误 ❌'}</span>
+                    <span class="exp-answer ${q.status==='correct'?'correct-ans':q.status==='wrong'?'wrong-ans':''}">${data.answer?'正确 ✅':'错误 ❌'}</span>
                 </div>
             `;
-
             if (!isSubmitted) {
                 const btns = card.querySelectorAll('.jbtn');
                 btns.forEach(btn => {
@@ -1457,7 +1488,6 @@
                         if (this.classList.contains('disabled')) return;
                         const idx = parseInt(this.dataset.qidx);
                         const val = this.dataset.val === 'true';
-                        // 取消同组选中
                         const parent = this.parentElement;
                         parent.querySelectorAll('.jbtn').forEach(b => {
                             b.classList.remove('selected-true', 'selected-false');
@@ -1468,22 +1498,16 @@
                         card.classList.remove('missing');
                         updateStats();
                         updateScore();
-                        // 自动提交（判断题点击即提交）
                         submitSingle(idx);
                     });
                 });
             }
-
             return card;
         }
 
-        // ============================================================
-        //  重置
-        // ============================================================
-
+        // ---------- 重置 ----------
         function resetAll() {
             allQuestions = JSON.parse(JSON.stringify(initialQuestions));
-            isGlobalSubmitted = false;
             submitBtn.disabled = false;
             submitBtn.textContent = '📨 提交全部未答题';
             render();
@@ -1491,15 +1515,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ============================================================
-        //  事件绑定 & 初始化
-        // ============================================================
-
+        // ---------- 绑定 ----------
         submitBtn.addEventListener('click', submitAllRemaining);
         resetBtn.addEventListener('click', resetAll);
 
+        // 初始化练习
         render();
-        console.log('⚡ 电力安规逐题练习 · 由沐春风制作');
+
+        console.log('⚡ 综合学习系统 · 由沐春风制作');
     </script>
 </body>
 </html>
