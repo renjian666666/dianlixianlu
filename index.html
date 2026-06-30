@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>电力安规 · 自测 + 原理图解</title>
+    <title>电力安规 · 综合学习</title>
     <style>
         /* ===== 基础重置 & 全局 ===== */
         * {
@@ -118,8 +118,6 @@
         /* ============================================================
               模块1: 在线练习 (原测验)
             ============================================================ */
-
-        /* stats */
         .stats {
             display: flex;
             flex-wrap: wrap;
@@ -147,7 +145,6 @@
         .stats .stat-item.wrong .num { color: #dc2626; }
         .stats .stat-item.pending .num { color: #f59e0b; }
 
-        /* section title */
         .section-title {
             font-size: 20px;
             font-weight: 700;
@@ -169,11 +166,7 @@
         .section-title .badge.fill { background: #dbeafe; color: #1d4ed8; }
         .section-title .badge.choice { background: #d1fae5; color: #059669; }
         .section-title .badge.judge { background: #fef3c7; color: #d97706; }
-        @media (max-width: 480px) {
-            .section-title { font-size: 17px; margin-top: 22px; }
-        }
 
-        /* q-card */
         .q-card {
             background: #ffffff;
             border: 1px solid #eef2f6;
@@ -250,7 +243,6 @@
             .q-card .q-text .fill-input { width: 110px; font-size: 14px; height: 38px; }
         }
 
-        /* options */
         .options {
             display: flex;
             flex-wrap: wrap;
@@ -295,13 +287,7 @@
             cursor: default;
             opacity: 0.85;
         }
-        .options .opt .tag {
-            font-size: 12px;
-            opacity: 0.7;
-            font-weight: 400;
-        }
 
-        /* judge buttons */
         .judge-btns {
             display: flex;
             flex-wrap: wrap;
@@ -354,7 +340,6 @@
             margin-right: 4px;
         }
 
-        /* explanation */
         .explanation {
             margin-top: 14px;
             padding: 12px 16px;
@@ -379,7 +364,6 @@
         .explanation .exp-answer.correct-ans { color: #16a34a; }
         .explanation .exp-answer.wrong-ans { color: #dc2626; }
 
-        /* single-actions */
         .single-actions {
             margin-top: 14px;
             display: flex;
@@ -443,7 +427,6 @@
             color: #d97706;
         }
 
-        /* submit area */
         .submit-area {
             margin-top: 32px;
             display: flex;
@@ -524,9 +507,8 @@
         }
 
         /* ============================================================
-              模块2: 原理图解 (变压器 + 避雷器)
+              模块2: 原理图解
             ============================================================ */
-
         .study-wrap {
             padding: 4px 0;
         }
@@ -559,14 +541,12 @@
             background: #eff6ff;
             border-color: #2563eb;
         }
-
         .study-wrap .sub-page {
             display: none;
             animation: fadeIn 0.25s ease;
         }
         .study-wrap .sub-page.show { display: block; }
 
-        /* 学习卡片样式 */
         .learn-card {
             background: #ffffff;
             border: 1px solid #eef2f6;
@@ -649,13 +629,142 @@
             background: #e2e8f0;
         }
 
-        .two-col-learn {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+        /* ============================================================
+              模块3: 简答题（折叠面板）
+            ============================================================ */
+        .essay-wrap {
+            padding: 4px 0;
         }
-        @media (max-width: 700px) {
-            .two-col-learn { grid-template-columns: 1fr; }
+        .essay-wrap .essay-intro {
+            font-size: 15px;
+            color: #475569;
+            margin-bottom: 20px;
+            padding: 14px 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+            line-height: 1.7;
+        }
+        .essay-wrap .essay-intro strong {
+            color: #1e293b;
+        }
+
+        .essay-accordion {
+            border: 1px solid #eef2f6;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .essay-accordion:hover {
+            border-color: #d0d8e3;
+        }
+        .essay-accordion .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 22px;
+            background: #fafcff;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+            gap: 12px;
+        }
+        .essay-accordion .accordion-header:hover {
+            background: #f1f4f9;
+        }
+        .essay-accordion .accordion-header .title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f2b44;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .essay-accordion .accordion-header .title .num-badge {
+            background: #2563eb;
+            color: #fff;
+            font-size: 13px;
+            border-radius: 30px;
+            padding: 0 12px;
+            line-height: 26px;
+            font-weight: 600;
+        }
+        .essay-accordion .accordion-header .arrow {
+            font-size: 20px;
+            color: #94a3b8;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .essay-accordion.open .accordion-header .arrow {
+            transform: rotate(180deg);
+        }
+        .essay-accordion .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 22px;
+            background: #ffffff;
+        }
+        .essay-accordion.open .accordion-body {
+            max-height: 3000px;
+            padding: 0 22px 22px 22px;
+        }
+        .essay-accordion .accordion-body .content {
+            padding-top: 6px;
+        }
+        .essay-accordion .accordion-body .content p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+        .essay-accordion .accordion-body .content ul {
+            padding-left: 24px;
+            margin: 6px 0 10px 0;
+        }
+        .essay-accordion .accordion-body .content ul li {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+        .essay-accordion .accordion-body .content .sub-item {
+            padding-left: 20px;
+            margin-top: 2px;
+        }
+        .essay-accordion .accordion-body .content .sub-item li {
+            font-size: 14.5px;
+            color: #475569;
+        }
+        .essay-accordion .accordion-body .content .highlight-key {
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+        .essay-accordion .accordion-body .content .tag {
+            display: inline-block;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 12px;
+            border-radius: 30px;
+            line-height: 24px;
+            margin-right: 4px;
+        }
+        .essay-accordion .accordion-body .content .danger {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        .essay-accordion .accordion-body .content .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 12px 0 4px 0;
+        }
+        .essay-accordion .accordion-body .content .tip-box strong {
+            color: #15803d;
         }
 
         /* ===== Toast ===== */
@@ -698,7 +807,6 @@
         }
         .footer strong { color: #475569; font-weight: 600; }
 
-        /* print */
         @media print {
             .btn-submit,
             .btn-reset,
@@ -710,6 +818,11 @@
             .app { box-shadow: none; border: 1px solid #ddd; }
             .page-wrap { display: block !important; }
             .study-wrap .sub-page { display: block !important; }
+            .essay-accordion .accordion-body {
+                max-height: none !important;
+                padding: 0 22px 22px 22px !important;
+            }
+            .essay-accordion .accordion-header .arrow { display: none; }
         }
     </style>
 </head>
@@ -726,24 +839,20 @@
         <div class="nav-tabs" id="mainTabs">
             <button class="tab-btn active" data-tab="practice">📝 在线练习</button>
             <button class="tab-btn" data-tab="study">📖 原理图解</button>
+            <button class="tab-btn" data-tab="essay">📄 简答题</button>
         </div>
 
         <!-- ============================================================
         页面1: 在线练习
         ============================================================ -->
         <div class="page-wrap show" id="pagePractice">
-            <!-- stats -->
             <div class="stats" id="stats">
                 <div class="stat-item"><span class="label">📝 总题</span><span class="num" id="totalCount">0</span></div>
                 <div class="stat-item done"><span class="label">✅ 已答</span><span class="num" id="doneCount">0</span></div>
                 <div class="stat-item wrong"><span class="label">❌ 错误</span><span class="num" id="wrongCount">0</span></div>
                 <div class="stat-item pending"><span class="label">⏳ 未答</span><span class="num" id="pendingCount">0</span></div>
             </div>
-
-            <!-- 题目容器 -->
             <div id="questionsContainer"></div>
-
-            <!-- submit area -->
             <div class="submit-area">
                 <div class="left">
                     <div class="score">得分：<span class="num" id="scoreNum">0</span> <span class="total">/ <span id="totalScore">0</span></span></div>
@@ -758,124 +867,73 @@
         ============================================================ -->
         <div class="page-wrap" id="pageStudy">
             <div class="study-wrap">
-                <!-- 二级导航 -->
                 <div class="sub-tabs" id="subTabs">
                     <button class="sub-btn active" data-sub="transformer">🔁 变压器接线分析</button>
                     <button class="sub-btn" data-sub="arrester">⚡ 避雷器工作原理</button>
                 </div>
-
-                <!-- 子页面: 变压器 -->
                 <div class="sub-page show" id="subTransformer">
                     <div class="learn-card">
-                        <div class="card-title">
-                            <span>📌 问题</span>
-                        </div>
+                        <div class="card-title"><span>📌 问题</span></div>
                         <p style="font-weight:500;font-size:16px;">根据变压器一二次接线图画向量图，并分析是什么接线？</p>
-
                         <div class="img-box">
                             <h4 style="margin-bottom:6px;color:#1e293b;">基础接线端子图：</h4>
                             <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEWUAVqQi6E6ZkSNVfdV0MqmzhfNDfmdQACjyEAAv6GGFYfrOJcR9KJQjwE.jpg"
                             alt="变压器端子图" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
                             <div class="img-fallback" style="display:none;">
-                                <span class="icon">🖼️</span>
-                                图片加载失败，请检查链接或网络<br>
+                                <span class="icon">🖼️</span>图片加载失败，请检查链接或网络<br>
                                 <span style="font-size:12px;color:#94a3b8;">https://img.remit.ee/api/file/...jpg</span>
                             </div>
                             <div class="img-label">变压器一二次接线端子图</div>
                         </div>
-
                         <div class="img-box">
                             <h4 style="margin-bottom:6px;color:#1e293b;">解析向量图：</h4>
                             <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEWUApqQi6vx8cW7UAvAZo41ZKoquqgGAAClSEAAv6GGFYBSaRGkCruyDwE.jpg"
                             alt="变压器向量解答图" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
                             <div class="img-fallback" style="display:none;">
-                                <span class="icon">📐</span>
-                                图片加载失败，请检查链接或网络<br>
+                                <span class="icon">📐</span>图片加载失败，请检查链接或网络<br>
                                 <span style="font-size:12px;color:#94a3b8;">https://img.remit.ee/api/file/...jpg</span>
                             </div>
                             <div class="img-label">变压器向量图分析（解答）</div>
                         </div>
-
                         <div class="split-line"></div>
-
                         <h3 style="margin:20px 0 10px;color:#1e293b;">一、绕组端子标识</h3>
                         <p>高压绕组端子：U1、U2，V1、V2，W1、W2；绕组组合U2V2W2</p>
-
                         <h3 style="margin:20px 0 10px;color:#1e293b;">二、接线图绘制步骤</h3>
                         <h4 style="margin:14px 0 6px;color:#334155;">步骤1：绘制高压侧向量（以高压侧线电压为12点钟相位参考）</h4>
-                        <ul>
-                            <li>高压一次侧：三角形D接线</li>
-                            <li>接线规则：U2接V1、V2接W1、W2接U1</li>
-                            <li>电气特性：三角形绕组线电压=相电压，例：U<sub>UV</sub>=U<sub>U1U2</sub></li>
-                            <li>高压三相相电压互差120°，E<sub>UV</sub> 固定置于12点钟方位作为基准。</li>
-                        </ul>
-
+                        <ul><li>高压一次侧：三角形D接线</li><li>接线规则：U2接V1、V2接W1、W2接U1</li><li>电气特性：三角形绕组线电压=相电压，例：U<sub>UV</sub>=U<sub>U1U2</sub></li><li>高压三相相电压互差120°，E<sub>UV</sub> 固定置于12点钟方位作为基准。</li></ul>
                         <h4 style="margin:14px 0 6px;color:#334155;">步骤2：绘制低压侧向量</h4>
-                        <ul>
-                            <li>低压二次侧：星形yn接线</li>
-                            <li>接线规则：u2、v2、w2尾端连接，引出中性点N</li>
-                            <li>电气特性：星形绕组线电压=√3倍相电压，线电压相位滞后对应相电压30°；低压相电压E<sub>un</sub>置于12点钟方位。</li>
-                        </ul>
-
+                        <ul><li>低压二次侧：星形yn接线</li><li>接线规则：u2、v2、w2尾端连接，引出中性点N</li><li>电气特性：星形绕组线电压=√3倍相电压，线电压相位滞后对应相电压30°；低压相电压E<sub>un</sub>置于12点钟方位。</li></ul>
                         <h4 style="margin:14px 0 6px;color:#334155;">步骤3：向量对比判断接线组别</h4>
-                        <ul>
-                            <li>相位关系：低压侧线电压超前高压侧线电压30°</li>
-                            <li>时钟判定：以高压线电压12点为基准，低压线电压落在11点钟方位</li>
-                            <li>最终接线组别：<strong>Dyn11</strong></li>
-                        </ul>
+                        <ul><li>相位关系：低压侧线电压超前高压侧线电压30°</li><li>时钟判定：以高压线电压12点为基准，低压线电压落在11点钟方位</li><li>最终接线组别：<strong>Dyn11</strong></li></ul>
                         <p style="margin-top:6px;">释义：高压三角形D、低压星形yn、11点接线，低压相位超前高压30°。</p>
-
                         <h3 style="margin:20px 0 10px;color:#1e293b;">三、向量相位补充说明</h3>
-                        <ul>
-                            <li>相位时钟判定规则：高压线电压固定12点，观察低压同名线电压钟点位置；</li>
-                            <li>Dyn11特点：低压超前高压30°，对应时钟11点，常用于配电变压器；</li>
-                            <li>向量定义：绕组电动势Ė<sub>绕组</sub>为绕组首端至尾端电势，线端电势Ė<sub>终端</sub>为对外出线电势。</li>
-                        </ul>
+                        <ul><li>相位时钟判定规则：高压线电压固定12点，观察低压同名线电压钟点位置；</li><li>Dyn11特点：低压超前高压30°，对应时钟11点，常用于配电变压器；</li><li>向量定义：绕组电动势Ė<sub>绕组</sub>为绕组首端至尾端电势，线端电势Ė<sub>终端</sub>为对外出线电势。</li></ul>
                     </div>
                 </div>
-
-                <!-- 子页面: 避雷器 -->
                 <div class="sub-page" id="subArrester">
                     <div class="learn-card">
-                        <div class="card-title">
-                            <span>📌 分析避雷器的工作原理</span>
-                        </div>
-
+                        <div class="card-title"><span>📌 分析避雷器的工作原理</span></div>
                         <div class="img-box">
                             <h4 style="margin-bottom:6px;color:#1e293b;">避雷器结构示意图：</h4>
                             <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEWUA5qQi67w118IXEjPRod6UwYdKlItwACmSEAAv6GGFYdMdhibnrJpTwE.png"
                             alt="避雷器原理图" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
                             <div class="img-fallback" style="display:none;">
-                                <span class="icon">🔗</span>
-                                图片加载失败，请检查链接或网络<br>
+                                <span class="icon">🔗</span>图片加载失败，请检查链接或网络<br>
                                 <span style="font-size:12px;color:#94a3b8;">https://img.remit.ee/api/file/...png</span>
                             </div>
                             <div class="img-label">氧化锌避雷器原理示意</div>
                         </div>
-
                         <div class="split-line"></div>
-
                         <h3 style="margin:20px 0 10px;color:#1e293b;">一、结构基础</h3>
-                        <p>现代避雷器核心是 <strong>氧化锌（ZnO）非线性电阻阀片</strong>，整体并联在电力线路与大地之间。
-                        核心特性：<strong>电阻随电压剧烈变化</strong> —— 低压时呈高阻绝缘态，高压时迅速导通。</p>
-
+                        <p>现代避雷器核心是 <strong>氧化锌（ZnO）非线性电阻阀片</strong>，整体并联在电力线路与大地之间。核心特性：<strong>电阻随电压剧烈变化</strong> —— 低压时呈高阻绝缘态，高压时迅速导通。</p>
                         <h3 style="margin:20px 0 10px;color:#1e293b;">二、分两种工况说明</h3>
-
                         <h4 style="margin:14px 0 6px;color:#334155;">1. 系统正常运行（工频额定电压）</h4>
                         <p>电网只有正常工作电压，电压幅值低。氧化锌阀片呈现极大绝缘电阻，近似开路，几乎没有电流流过避雷器，不影响线路正常送电，不会造成对地漏电、损耗。</p>
-
                         <h4 style="margin:14px 0 6px;color:#334155;">2. 雷电 / 操作过电压来袭（出现高压冲击）</h4>
                         <p>雷击、分合闸会产生数倍于额定电压的瞬时过电压，冲击沿导线传播：</p>
-                        <ul>
-                            <li>高电压加在避雷器两端，阀片电阻瞬间急剧变小，由绝缘变为导通；</li>
-                            <li>避雷器打开一条对地泄放通道，巨大雷电流通过避雷器流入接地装置散入大地；</li>
-                            <li>导通时避雷器自身会维持一个很低的固定电压（残压），把线路冲击电压钳制在设备绝缘能承受的安全范围；</li>
-                            <li>并联在同一线路的变压器、开关柜等设备，两端电压被限制在残压，绝缘不会被击穿。</li>
-                        </ul>
-
+                        <ul><li>高电压加在避雷器两端，阀片电阻瞬间急剧变小，由绝缘变为导通；</li><li>避雷器打开一条对地泄放通道，巨大雷电流通过避雷器流入接地装置散入大地；</li><li>导通时避雷器自身会维持一个很低的固定电压（残压），把线路冲击电压钳制在设备绝缘能承受的安全范围；</li><li>并联在同一线路的变压器、开关柜等设备，两端电压被限制在残压，绝缘不会被击穿。</li></ul>
                         <h4 style="margin:14px 0 6px;color:#334155;">3. 过电压消失后（恢复绝缘）</h4>
                         <p>雷电冲击瞬时结束，线路回到工频低压，阀片电阻立刻恢复高阻绝缘状态，自动切断工频电流，避免持续对地短路跳闸，电网恢复正常运行。</p>
-
                         <h3 style="margin:20px 0 10px;color:#1e293b;">三、结合图示完整流程</h3>
                         <div style="display:flex;flex-wrap:wrap;gap:8px 4px;font-size:15px;line-height:1.9;background:#f8fafc;padding:12px 16px;border-radius:10px;">
                             <span style="background:#eff6ff;padding:6px 18px;border-radius:30px;">① 雷电过电压冲击波沿线路袭来</span>
@@ -884,22 +942,214 @@
                             <span style="color:#94a3b8;">→</span>
                             <span style="background:#dbeafe;padding:6px 18px;border-radius:30px;font-weight:600;color:#1d4ed8;">③ 被保护设备两端不会承受高压冲击，实现绝缘防护</span>
                         </div>
-
                         <h3 style="margin:24px 0 10px;color:#1e293b;">四、核心作用总结</h3>
                         <div class="highlight-box">
-                            <p style="font-size:15.5px;line-height:1.9;margin:0;">
-                                <strong>避雷器是并联型过电压保护设备</strong>，依靠非线性电阻 <strong>“低压绝缘、高压导通”</strong> 的特性，
-                                泄放雷电流、限制残压，防止雷电冲击击穿电气设备绝缘。
-                            </p>
+                            <p style="font-size:15.5px;line-height:1.9;margin:0;"><strong>避雷器是并联型过电压保护设备</strong>，依靠非线性电阻 <strong>“低压绝缘、高压导通”</strong> 的特性，泄放雷电流、限制残压，防止雷电冲击击穿电气设备绝缘。</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- ============================================================
+        页面3: 简答题（折叠面板）
+        ============================================================ -->
+        <div class="page-wrap" id="pageEssay">
+            <div class="essay-wrap">
+                <div class="essay-intro">
+                    <strong>📘 电力考试简答题 · 精简背诵版</strong><br>
+                    按模块拆分记忆，安全措施、五防、互感器禁忌属于高频考点，优先熟记；易混点区分 PT并联/CT串联、二次侧短路/开路禁忌，接地线装拆顺序。
+                </div>
+
+                <!-- 1. 铁路供电及高低压核心设备 -->
+                <div class="essay-accordion open">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">一</span> 铁路供电及高低压核心设备</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <p><span class="tag">自闭线</span> 铁路信号一级负荷供电，具备故障自动切换，供电可靠性高，保障行车核心信号用电</p>
+                            <p><span class="tag">贯通线</span> 供给车站生活等普通负荷，同时可作为自闭线备用电源</p>
+                            <p style="margin-top:12px;"><span class="tag">架空线路设备组成</span> 核心六部件：杆塔、导线、避雷线、绝缘子、金具、接地装置</p>
+                            <p style="margin-top:12px;"><span class="tag">高压开关柜及五防功能</span></p>
+                            <p>高压开关柜：高压成套电气设备，用于电力系统控制、保护电气设备</p>
+                            <p><strong>五防核心：</strong></p>
+                            <ul>
+                                <li>① 防误分、误合断路器</li>
+                                <li>② 防带负荷拉、合隔离开关</li>
+                                <li>③ 防带电挂接地线（合接地刀闸）</li>
+                                <li>④ 防带接地线合闸送电</li>
+                                <li>⑤ 防误入带电间隔</li>
+                            </ul>
+                            <p><span class="highlight-key">目的：</span>杜绝电气误操作，保障人身安全和设备完好</p>
+
+                            <p style="margin-top:12px;"><span class="tag">SCADA、RTU、GIS核心定义</span></p>
+                            <ul>
+                                <li><strong>SCADA</strong>：数据采集与监视控制系统，实现电力设备远程监控、遥控操作</li>
+                                <li><strong>RTU</strong>：远程终端单元，采集现场数据并上传至SCADA系统</li>
+                                <li><strong>GIS</strong>：SF₆气体绝缘开关设备，集成化高压开关设备；固体绝缘开关柜采用环氧树脂固体绝缘，无SF₆，环保安全</li>
+                            </ul>
+
+                            <p style="margin-top:12px;"><span class="tag">常用低压配电设备及核心功能</span></p>
+                            <ul>
+                                <li><strong>闸刀开关</strong>：隔离电源，严禁带负荷操作</li>
+                                <li><strong>低压断路器</strong>：可带负荷通断电路，过载、短路自动跳闸保护</li>
+                                <li><strong>熔断器</strong>：短路/严重过载时熔断，保护线路设备</li>
+                                <li><strong>漏电保护器</strong>：检测漏电故障，触电、漏电快速跳闸</li>
+                                <li><strong>接触器</strong>：适用于电气负载远程、频繁投切</li>
+                                <li><strong>电度表</strong>：精准计量消耗电能</li>
+                                <li><strong>继电器</strong>：以小信号控制大电流回路，用于电力保护及自动控制</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 验电器分类及使用方法 -->
+                <div class="essay-accordion">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">二</span> 验电器分类及使用方法</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <p><span class="tag">分类</span> 高压验电器、低压验电笔</p>
+                            <p><span class="tag">使用步骤</span></p>
+                            <ul>
+                                <li><strong>① 前期检查：</strong>外观完好、在试验有效期内</li>
+                                <li><strong>② 设备校验：</strong>在已知带电设备测试，确认验电器有效</li>
+                                <li><strong>③ 逐相验电：</strong>对被测电气设备逐相完成验电</li>
+                                <li><strong>④ 安全防护：</strong>高压验电佩戴绝缘手套，保持规范安全距离</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 电缆七种敷设方式 -->
+                <div class="essay-accordion">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">三</span> 电缆七种敷设方式</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <p>直埋敷设、电缆沟敷设、电缆排管敷设、电缆隧道敷设、桥架敷设、穿管敷设、架空悬挂敷设</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. 电力工作安全核心规定 -->
+                <div class="essay-accordion">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">四</span> 电力工作安全核心规定</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <p><span class="tag">技术措施（四步必做）</span></p>
+                            <p style="font-weight:600;color:#1d4ed8;">停电 → 验电 → 接地 → 悬挂标示牌、装设遮栏</p>
+                            <p style="margin-top:12px;"><span class="tag">组织措施（四大制度）</span></p>
+                            <ul>
+                                <li>工作票制度</li>
+                                <li>工作许可制度</li>
+                                <li>工作监护制度</li>
+                                <li>工作间断/转移/终结制度</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. 接地线作用及操作步骤 -->
+                <div class="essay-accordion">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">五</span> 接地线作用及操作步骤</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <p><span class="tag">核心作用</span> 防范设备突然来电、感应电压，杜绝人身触电伤害</p>
+                            <p><span class="tag">装设顺序</span> <span class="highlight-key">先接接地端 → 后接设备导体端</span></p>
+                            <p><span class="tag">拆除顺序</span> <span class="danger">先拆设备导体端 → 后拆接地端</span></p>
+                            <p><span class="tag">操作要求</span> 全程佩戴绝缘手套</p>
+                            <div class="tip-box">
+                                <strong>💡 速记：</strong>装设“先地后导”，拆除“先导后地”，顺序不可颠倒！
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. 架空线路巡视核心内容 -->
+                <div class="essay-accordion">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">六</span> 架空线路巡视核心内容</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <ul>
+                                <li><strong>杆塔：</strong>检查倾斜、破损、开裂情况</li>
+                                <li><strong>导线：</strong>检查断股、老化、弧垂异常</li>
+                                <li><strong>绝缘子：</strong>检查破损、污垢、放电闪络痕迹</li>
+                                <li><strong>金具：</strong>检查锈蚀、松动、脱落</li>
+                                <li><strong>线路通道：</strong>排查树障、违章建筑等安全隐患</li>
+                                <li><strong>防雷接地：</strong>检查接地装置完好、连接可靠</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. 箱式变电站及人体触电类型 -->
+                <div class="essay-accordion">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">七</span> 箱式变电站及人体触电类型</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <p><span class="tag">箱式变电站</span> 集成高压开关、变压器、低压配电的成套户外设备，核心功能：降压、分配电能</p>
+                            <p style="margin-top:12px;"><span class="tag">人体四种触电类型</span></p>
+                            <ul>
+                                <li>单相触电</li>
+                                <li>两相触电</li>
+                                <li>跨步电压触电</li>
+                                <li>接触电压触电</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. 电压互感器（PT）、电流互感器（CT） -->
+                <div class="essay-accordion">
+                    <div class="accordion-header">
+                        <span class="title"><span class="num-badge">八</span> 电压互感器（PT）、电流互感器（CT）</span>
+                        <span class="arrow">▾</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="content">
+                            <p><span class="tag">电压互感器（PT）</span></p>
+                            <ul>
+                                <li><strong>接线：</strong><span class="highlight-key">并联</span>于线路两相之间</li>
+                                <li><strong>作用：</strong>高压转换为标准100V低压，用于电压测量、继电保护</li>
+                                <li><strong class="danger">安全禁忌：</strong>二次侧严禁短路，二次绕组必须可靠接地</li>
+                            </ul>
+                            <p style="margin-top:12px;"><span class="tag">电流互感器（CT）</span></p>
+                            <ul>
+                                <li><strong>接线：</strong><span class="highlight-key">串联</span>于单根导线中</li>
+                                <li><strong>作用：</strong>大电流转换为1A/5A标准小电流，用于电流测量、继电保护</li>
+                                <li><strong class="danger">安全禁忌：</strong>二次侧严禁开路，二次绕组必须可靠接地</li>
+                            </ul>
+                            <div class="tip-box">
+                                <strong>🧠 易混点速记：</strong> PT并联测电压（二次<span class="danger">禁短路</span>），CT串联测电流（二次<span class="danger">禁开路</span>）！
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
         <!-- ===== Footer ===== -->
         <div class="footer">
-            <strong>由沐春风制作</strong> · 电力安全规程 · 逐题练习 + 原理图解
+            <strong>由沐春风制作</strong> · 电力安全规程 · 逐题练习 + 原理图解 + 简答题背诵
         </div>
     </div>
 
@@ -911,14 +1161,13 @@
     ============================================================ -->
     <script>
         // ============================================================
-        //  1. 导航切换（一级 + 二级）
+        //  1. 导航切换（一级）
         // ============================================================
-
-        // 一级导航
         const mainTabs = document.querySelectorAll('#mainTabs .tab-btn');
-        const pages = {
+        const pageMap = {
             practice: document.getElementById('pagePractice'),
-            study: document.getElementById('pageStudy')
+            study: document.getElementById('pageStudy'),
+            essay: document.getElementById('pageEssay')
         };
 
         mainTabs.forEach(btn => {
@@ -926,9 +1175,10 @@
                 const tab = this.dataset.tab;
                 mainTabs.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                Object.keys(pages).forEach(key => {
-                    pages[key].classList.toggle('show', key === tab);
+                Object.keys(pageMap).forEach(key => {
+                    pageMap[key].classList.toggle('show', key === tab);
                 });
+                // 如果切换到 study，确保第一个子标签激活
                 if (tab === 'study') {
                     const activeSub = document.querySelector('#subTabs .sub-btn.active');
                     if (!activeSub) {
@@ -938,7 +1188,9 @@
             });
         });
 
-        // 二级导航 (学习模块)
+        // ============================================================
+        //  2. 二级导航 (学习模块)
+        // ============================================================
         const subTabs = document.querySelectorAll('#subTabs .sub-btn');
         const subPages = {
             transformer: document.getElementById('subTransformer'),
@@ -957,11 +1209,26 @@
         });
 
         // ============================================================
-        //  2. 在线练习模块 (完整保留原测验逻辑，修复填空题匹配)
+        //  3. 简答题折叠面板
         // ============================================================
+        const accordions = document.querySelectorAll('.essay-accordion');
+        accordions.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', function() {
+                // 切换当前面板
+                item.classList.toggle('open');
+            });
+        });
 
+        // 默认展开第一个
+        if (accordions.length > 0) {
+            accordions[0].classList.add('open');
+        }
+
+        // ============================================================
+        //  4. 在线练习模块 (完整保留)
+        // ============================================================
         // ---------- 数据 ----------
-        // 修正第8题答案为 "遥测" （原为 "遥信"）
         const fillData = [
             { id: 1, question: '电力线路检修带电导线电压在 10-35kV 时，距离检修的线路的安全距离为 ___ m。', answers: ['1.0', '1'],
                 explanation: '安规 10～35kV 不停电检修安全距离 1m。' },
@@ -977,9 +1244,8 @@
                 explanation: '避雷器用于防护雷电过电压（雷击）。' },
             { id: 7, question: '电流表又称 ___ ，电流表是用来测量电流的大小，单位为安培 (A)。', answers: ['安培表'],
                 explanation: '电流表又称安培表。' },
-            // 第8题修正为 "遥测"
-            { id: 8, question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括： ___、遥控、遥信 。', answers: ['遥测'],
-                explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。注意：本题空缺的是“遥测”。' },
+            { id: 8, question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括：遥测、遥控、 ___ 。', answers: ['遥测'],
+                explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。' },
             { id: 9, question: '容易发生火花、温度过高的电气设备，必须装在地面 ___ m 以上的位置。', answers: ['2.5', '2.5m'],
                 explanation: '电气设备安装高度要求 ≥ 2.5m。' },
             { id: 10, question: '每台油量为 ___ kg 及以上的三相变压器，应装设在单独的变压器室内。', answers: ['1000', '1000kg'],
@@ -1092,7 +1358,6 @@
         allQuestions = buildQuestions();
         const initialQuestions = JSON.parse(JSON.stringify(allQuestions));
 
-        // DOM 引用
         const container = document.getElementById('questionsContainer');
         const totalCountEl = document.getElementById('totalCount');
         const doneCountEl = document.getElementById('doneCount');
@@ -1121,21 +1386,16 @@
             }
         }
 
-        // ---------- 修复后的填空题匹配逻辑 ----------
         function calculateCorrectness(q) {
             const data = q.data;
             if (q.type === 'fill') {
                 const userAns = (q.userAnswer || '').trim();
                 if (!userAns) return false;
-
-                // 1. 精确匹配（去除空格、统一小写）
                 const normalizedUser = userAns.replace(/\s/g, '').toLowerCase();
                 for (let ans of data.answers) {
                     const normAns = ans.replace(/\s/g, '').toLowerCase();
                     if (normalizedUser === normAns) return true;
                 }
-
-                // 2. 数字匹配（将用户输入和答案解析为数字，忽略单位）
                 const numUser = parseFloat(userAns);
                 if (!isNaN(numUser)) {
                     for (let ans of data.answers) {
@@ -1178,7 +1438,6 @@
             totalScoreEl.textContent = allQuestions.length;
         }
 
-        // ---------- 单题提交 ----------
         function submitSingle(index) {
             const q = allQuestions[index];
             if (!q) return;
@@ -1199,11 +1458,9 @@
                 });
                 return;
             }
-
             const isCorrect = calculateCorrectness(q);
             q.status = isCorrect ? 'correct' : 'wrong';
             render();
-
             const cards = document.querySelectorAll('.q-card');
             cards.forEach(card => {
                 if (parseInt(card.dataset.index) === index) {
@@ -1213,11 +1470,9 @@
                     setTimeout(() => card.style.background = '', 1200);
                 }
             });
-
             showToast(isCorrect ? '✅ 回答正确！' : '❌ 回答错误，查看解析', 2000);
             updateStats();
             updateScore();
-
             const allDone = allQuestions.every(q => q.status === 'correct' || q.status === 'wrong');
             if (allDone) {
                 const correct = allQuestions.filter(q => q.status === 'correct').length;
@@ -1230,13 +1485,11 @@
             }
         }
 
-        // ---------- 全局提交 ----------
         function submitAllRemaining() {
             const missingIndices = [];
             allQuestions.forEach((q, idx) => {
                 if (q.status === 'pending' && !getAnswered(q)) missingIndices.push(idx);
             });
-
             if (missingIndices.length > 0) {
                 document.querySelectorAll('.q-card.missing').forEach(el => el.classList.remove('missing'));
                 missingIndices.forEach(idx => {
@@ -1253,7 +1506,6 @@
                 showToast(`⚠️ 还有 ${missingIndices.length} 道题未作答`, 2800);
                 return;
             }
-
             let anySubmitted = false;
             allQuestions.forEach((q, idx) => {
                 if (q.status === 'pending') {
@@ -1262,12 +1514,10 @@
                     anySubmitted = true;
                 }
             });
-
             if (!anySubmitted) {
                 showToast('📌 所有题目都已经提交过了', 2000);
                 return;
             }
-
             render();
             const correct = allQuestions.filter(q => q.status === 'correct').length;
             const total = allQuestions.length;
@@ -1280,7 +1530,6 @@
             submitBtn.textContent = '✅ 全部已答';
         }
 
-        // ---------- 渲染 ----------
         function render() {
             container.innerHTML = '';
             const fillItems = allQuestions.filter(q => q.type === 'fill');
@@ -1314,10 +1563,8 @@
                     sec.appendChild(card);
                 });
             }
-
             updateStats();
             updateScore();
-
             const allDone = allQuestions.every(q => q.status === 'correct' || q.status === 'wrong');
             if (allDone) {
                 submitBtn.disabled = true;
@@ -1336,7 +1583,6 @@
             return div.firstElementChild ? div.firstElementChild.parentNode : div;
         }
 
-        // 填空题卡片
         function createFillCard(q, globalIdx) {
             const card = document.createElement('div');
             card.className = 'q-card';
@@ -1351,7 +1597,6 @@
             const isSubmitted = q.status !== 'pending';
             const statusHtml = isSubmitted ?
                 `<span class="status-badge ${q.status}">${q.status==='correct'?'✅ 正确':'❌ 错误'}</span>` : '';
-
             card.innerHTML = `
                 <div class="q-header"><span class="q-number">${q.displayId}</span><span class="q-text">${qText}</span></div>
                 <div class="single-actions">${!isSubmitted?`<button class="btn-confirm-single" data-qidx="${globalIdx}"><span class="icon">✔️</span> 确认答案</button>`:''}${statusHtml}</div>
@@ -1384,7 +1629,6 @@
             return card;
         }
 
-        // 单选题卡片
         function createChoiceCard(q, globalIdx) {
             const card = document.createElement('div');
             card.className = 'q-card';
@@ -1437,7 +1681,6 @@
             return card;
         }
 
-        // 判断题卡片
         function createJudgeCard(q, globalIdx) {
             const card = document.createElement('div');
             card.className = 'q-card';
@@ -1503,7 +1746,6 @@
             return card;
         }
 
-        // ---------- 重置 ----------
         function resetAll() {
             allQuestions = JSON.parse(JSON.stringify(initialQuestions));
             submitBtn.disabled = false;
@@ -1513,14 +1755,10 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ---------- 绑定 ----------
         submitBtn.addEventListener('click', submitAllRemaining);
         resetBtn.addEventListener('click', resetAll);
-
-        // 初始化练习
         render();
-
-        console.log('⚡ 综合学习系统 · 由沐春风制作 (第8题已修正为“遥测”)');
+        console.log('⚡ 综合学习系统 · 由沐春风制作 (已新增简答题模块)');
     </script>
 </body>
 </html>
