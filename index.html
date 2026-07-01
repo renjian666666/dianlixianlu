@@ -116,7 +116,7 @@
         }
 
         /* ============================================================
-              模块1: 在线练习 (原测验)
+              模块1: 在线练习 (填空/选择/判断)
             ============================================================ */
         .stats {
             display: flex;
@@ -843,7 +843,7 @@
         </div>
 
         <!-- ============================================================
-        页面1: 在线练习
+        页面1: 在线练习 (填空/选择/判断)
         ============================================================ -->
         <div class="page-wrap show" id="pagePractice">
             <div class="stats" id="stats">
@@ -1145,7 +1145,17 @@
                     </div>
                 </div>
 
-
+                <!-- 底部背诵提示 -->
+                <div style="margin-top:20px;padding:16px 20px;background:#f0f7ff;border-radius:16px;border:1px solid #dbeafe;">
+                    <p style="font-size:15px;color:#1e293b;line-height:1.8;">
+                        💡 <strong>背诵提示：</strong>可按模块拆分记忆，安全措施、五防、互感器禁忌属于高频考点，优先熟记；易混点区分PT并联/CT串联、二次侧短路/开路禁忌，接地线装拆顺序。
+                    </p>
+                    <p style="font-size:15px;color:#1e293b;line-height:1.8;margin-top:6px;">
+                        🔥 需要我把高频考点浓缩成 <strong>精简速记口诀版</strong>，方便考前快速复习吗？
+                    </p>
+                </div>
+            </div>
+        </div>
 
         <!-- ===== Footer ===== -->
         <div class="footer">
@@ -1178,7 +1188,6 @@
                 Object.keys(pageMap).forEach(key => {
                     pageMap[key].classList.toggle('show', key === tab);
                 });
-                // 如果切换到 study，确保第一个子标签激活
                 if (tab === 'study') {
                     const activeSub = document.querySelector('#subTabs .sub-btn.active');
                     if (!activeSub) {
@@ -1215,20 +1224,17 @@
         accordions.forEach(item => {
             const header = item.querySelector('.accordion-header');
             header.addEventListener('click', function() {
-                // 切换当前面板
                 item.classList.toggle('open');
             });
         });
-
-        // 默认展开第一个
         if (accordions.length > 0) {
             accordions[0].classList.add('open');
         }
 
         // ============================================================
-        //  4. 在线练习模块 (完整保留)
+        //  4. 在线练习模块 (全部答案已逐题复核)
         // ============================================================
-        // ---------- 数据 ----------
+        // ---------- 填空题数据 ----------
         const fillData = [
             { id: 1, question: '电力线路检修带电导线电压在 10-35kV 时，距离检修的线路的安全距离为 ___ m。', answers: ['1.0', '1'],
                 explanation: '安规 10～35kV 不停电检修安全距离 1m。' },
@@ -1244,8 +1250,8 @@
                 explanation: '避雷器用于防护雷电过电压（雷击）。' },
             { id: 7, question: '电流表又称 ___ ，电流表是用来测量电流的大小，单位为安培 (A)。', answers: ['安培表'],
                 explanation: '电流表又称安培表。' },
-            { id: 8, question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括：遥测、遥控、 ___ 。', answers: ['遥测'],
-                explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。' },
+            { id: 8, question: 'RTU 是电力 SCADA 系统中的被控站主要功能包括：遥信、遥控、 ___ 。', answers: ['遥测'],
+                explanation: '三遥基础：遥测采集量值、遥信采集开关、遥控分合闸。注：本题空缺为“遥测”。' },
             { id: 9, question: '容易发生火花、温度过高的电气设备，必须装在地面 ___ m 以上的位置。', answers: ['2.5', '2.5m'],
                 explanation: '电气设备安装高度要求 ≥ 2.5m。' },
             { id: 10, question: '每台油量为 ___ kg 及以上的三相变压器，应装设在单独的变压器室内。', answers: ['1000', '1000kg'],
@@ -1265,6 +1271,7 @@
                 explanation: '接地线截面 ≥ 25mm²。' }
         ];
 
+        // ---------- 选择题数据 ----------
         const choiceData = [
             { id: 1, question: '变压器运行时，油温最高的部位是', options: ['A、铁芯', 'B、绕组', 'C、上层绝缘油', 'D、下层绝缘油'],
                 answer: 1, explanation: '绕组通电发热最严重，温度高于铁芯与上层油。' },
@@ -1302,6 +1309,7 @@
                 answer: 2, explanation: '低压试电笔适用于 500V 以下。' }
         ];
 
+        // ---------- 判断题数据 ----------
         const judgeData = [
             { id: 1, question: '松软土质的杆坑深度超过 1m 时，应有防止塌陷措施。', answer: true,
             explanation: '松软土质深坑需防塌陷。' },
@@ -1386,6 +1394,7 @@
             }
         }
 
+        // 严格匹配逻辑（精确匹配 + 数字数值匹配）
         function calculateCorrectness(q) {
             const data = q.data;
             if (q.type === 'fill') {
@@ -1438,6 +1447,7 @@
             totalScoreEl.textContent = allQuestions.length;
         }
 
+        // ---------- 核心修改：提交单题后滚动到下一题 ----------
         function submitSingle(index) {
             const q = allQuestions[index];
             if (!q) return;
@@ -1461,6 +1471,8 @@
             const isCorrect = calculateCorrectness(q);
             q.status = isCorrect ? 'correct' : 'wrong';
             render();
+
+            // 获取所有卡片，闪烁当前卡片
             const cards = document.querySelectorAll('.q-card');
             cards.forEach(card => {
                 if (parseInt(card.dataset.index) === index) {
@@ -1470,9 +1482,28 @@
                     setTimeout(() => card.style.background = '', 1200);
                 }
             });
+
+            // 滚动到下一题（如果存在）
+            let nextCard = null;
+            cards.forEach(card => {
+                const idx = parseInt(card.dataset.index);
+                if (idx === index + 1) nextCard = card;
+            });
+            if (nextCard) {
+                setTimeout(() => {
+                    nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            } else {
+                // 没有下一题，滚动到提交区域
+                setTimeout(() => {
+                    document.querySelector('.submit-area').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+
             showToast(isCorrect ? '✅ 回答正确！' : '❌ 回答错误，查看解析', 2000);
             updateStats();
             updateScore();
+
             const allDone = allQuestions.every(q => q.status === 'correct' || q.status === 'wrong');
             if (allDone) {
                 const correct = allQuestions.filter(q => q.status === 'correct').length;
@@ -1758,7 +1789,7 @@
         submitBtn.addEventListener('click', submitAllRemaining);
         resetBtn.addEventListener('click', resetAll);
         render();
-        console.log('⚡ 综合学习系统 · 由沐春风制作 (已新增简答题模块)');
+        console.log('⚡ 综合学习系统 · 由沐春风制作 (已增加自动滚动到下一题)');
     </script>
 </body>
 </html>
