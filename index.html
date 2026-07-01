@@ -1180,20 +1180,24 @@
             essay: document.getElementById('pageEssay')
         };
 
+        function switchTab(tabName) {
+            mainTabs.forEach(b => b.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+            Object.keys(pageMap).forEach(key => {
+                pageMap[key].classList.toggle('show', key === tabName);
+            });
+            if (tabName === 'study') {
+                const activeSub = document.querySelector('#subTabs .sub-btn.active');
+                if (!activeSub) {
+                    document.querySelector('#subTabs .sub-btn').click();
+                }
+            }
+        }
+
         mainTabs.forEach(btn => {
             btn.addEventListener('click', function() {
                 const tab = this.dataset.tab;
-                mainTabs.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                Object.keys(pageMap).forEach(key => {
-                    pageMap[key].classList.toggle('show', key === tab);
-                });
-                if (tab === 'study') {
-                    const activeSub = document.querySelector('#subTabs .sub-btn.active');
-                    if (!activeSub) {
-                        document.querySelector('#subTabs .sub-btn').click();
-                    }
-                }
+                switchTab(tab);
             });
         });
 
@@ -1345,6 +1349,8 @@
 
         // ---------- 状态 ----------
         let allQuestions = [];
+        let allDoneTriggered = false; // 防止重复触发跳转
+        let autoJumpTimer = null;
 
         function buildQuestions() {
             const qs = [];
@@ -1447,7 +1453,43 @@
             totalScoreEl.textContent = allQuestions.length;
         }
 
-        // ---------- 核心修改：提交单题后滚动到下一题 ----------
+        // 检查是否全部完成，并触发跳转
+        function checkAndHandleAllDone() {
+            const allDone = allQuestions.every(q => q.status === 'correct' || q.status === 'wrong');
+            if (allDone && !allDoneTriggered) {
+                allDoneTriggered = true;
+                // 显示确认框并启动定时器
+                if (autoJumpTimer) clearTimeout(autoJumpTimer);
+                // 启动3秒定时器
+                autoJumpTimer = setTimeout(() => {
+                    // 自动跳转
+                    switchTab('study');
+                    showToast('⏰ 已自动跳转到原理图解', 2000);
+                    autoJumpTimer = null;
+                }, 3000);
+
+                // 弹出确认框（阻塞）
+                const userConfirmed = confirm('🎉 所有题目已完成！是否立即跳转到原理图解学习？\n（若3秒无操作将自动跳转）');
+                if (userConfirmed) {
+                    // 用户点击确定，清除定时器并立即跳转
+                    if (autoJumpTimer) {
+                        clearTimeout(autoJumpTimer);
+                        autoJumpTimer = null;
+                    }
+                    switchTab('study');
+                    showToast('✅ 已跳转到原理图解', 2000);
+                } else {
+                    // 用户点击取消，清除定时器，不跳转
+                    if (autoJumpTimer) {
+                        clearTimeout(autoJumpTimer);
+                        autoJumpTimer = null;
+                    }
+                    showToast('已取消跳转', 1500);
+                }
+            }
+        }
+
+        // ---------- 提交单题 ----------
         function submitSingle(index) {
             const q = allQuestions[index];
             if (!q) return;
@@ -1472,7 +1514,7 @@
             q.status = isCorrect ? 'correct' : 'wrong';
             render();
 
-            // 获取所有卡片，闪烁当前卡片
+            // 闪烁当前卡片
             const cards = document.querySelectorAll('.q-card');
             cards.forEach(card => {
                 if (parseInt(card.dataset.index) === index) {
@@ -1483,7 +1525,7 @@
                 }
             });
 
-            // 滚动到下一题（如果存在）
+            // 滚动到下一题
             let nextCard = null;
             cards.forEach(card => {
                 const idx = parseInt(card.dataset.index);
@@ -1494,7 +1536,6 @@
                     nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 300);
             } else {
-                // 没有下一题，滚动到提交区域
                 setTimeout(() => {
                     document.querySelector('.submit-area').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 300);
@@ -1504,18 +1545,11 @@
             updateStats();
             updateScore();
 
-            const allDone = allQuestions.every(q => q.status === 'correct' || q.status === 'wrong');
-            if (allDone) {
-                const correct = allQuestions.filter(q => q.status === 'correct').length;
-                const total = allQuestions.length;
-                const pct = Math.round((correct / total) * 100);
-                let emoji = pct >= 90 ? '🏆 太棒了！' : pct >= 70 ? '👍 不错！' : '💪 继续加油！';
-                showToast(`🎉 全部完成！得分 ${correct}/${total}（${pct}%） ${emoji}`, 4000);
-                submitBtn.disabled = true;
-                submitBtn.textContent = '✅ 全部已答';
-            }
+            // 检查是否全部完成
+            checkAndHandleAllDone();
         }
 
+        // ---------- 提交全部未答题 ----------
         function submitAllRemaining() {
             const missingIndices = [];
             allQuestions.forEach((q, idx) => {
@@ -1559,8 +1593,12 @@
             updateScore();
             submitBtn.disabled = true;
             submitBtn.textContent = '✅ 全部已答';
+
+            // 检查是否全部完成（全局提交后一定全部完成）
+            checkAndHandleAllDone();
         }
 
+        // ---------- 渲染 ----------
         function render() {
             container.innerHTML = '';
             const fillItems = allQuestions.filter(q => q.type === 'fill');
@@ -1603,6 +1641,14 @@
             } else {
                 submitBtn.disabled = false;
                 submitBtn.textContent = '📨 提交全部未答题';
+                // 如果之前触发过全部完成，但后来因重置等原因取消，重置标志
+                if (allDoneTriggered) {
+                    allDoneTriggered = false;
+                    if (autoJumpTimer) {
+                        clearTimeout(autoJumpTimer);
+                        autoJumpTimer = null;
+                    }
+                }
             }
         }
 
@@ -1646,6 +1692,15 @@
                     card.classList.remove('missing');
                     updateStats();
                     updateScore();
+                });
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.keyCode === 13) {
+                        e.preventDefault();
+                        const idx = parseInt(this.dataset.qidx);
+                        if (allQuestions[idx].status === 'pending') {
+                            submitSingle(idx);
+                        }
+                    }
                 });
                 if (q.status === 'correct') input.classList.add('correct');
                 if (q.status === 'wrong') input.classList.add('wrong');
@@ -1779,6 +1834,11 @@
 
         function resetAll() {
             allQuestions = JSON.parse(JSON.stringify(initialQuestions));
+            allDoneTriggered = false;
+            if (autoJumpTimer) {
+                clearTimeout(autoJumpTimer);
+                autoJumpTimer = null;
+            }
             submitBtn.disabled = false;
             submitBtn.textContent = '📨 提交全部未答题';
             render();
@@ -1789,7 +1849,7 @@
         submitBtn.addEventListener('click', submitAllRemaining);
         resetBtn.addEventListener('click', resetAll);
         render();
-        console.log('⚡ 综合学习系统 · 由沐春风制作 (已增加自动滚动到下一题)');
+        console.log('⚡ 综合学习系统 · 由沐春风制作 (已增加回车提交 + 全部完成跳转)');
     </script>
 </body>
 </html>
